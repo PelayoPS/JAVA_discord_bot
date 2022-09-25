@@ -8,7 +8,7 @@ This bot will be created using the jda api mostly as an educational example for 
 **Discord server where you can test it**: https://discord.gg/F8AqWbEh8S
 (Disclaimer: the server lang is esp but some users can also talk in eng )
 
-**Año**: 2022-20...
+**Year**: 2022-20...
 
 🔔 My socials 🔔
 
