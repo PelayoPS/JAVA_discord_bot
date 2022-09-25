@@ -10,7 +10,7 @@ This bot will be created using the jda api mostly as an educational example for 
 
 **Año**: 2022-20...
 
-🔔 Redes sociales 🔔
+🔔 MY socials 🔔
 
 ► Twitch https://www.twitch.tv/pelayo_p_s
 
