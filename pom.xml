@@ -6,7 +6,7 @@
 
     <groupId>com.pelayops.discordbot</groupId>
     <artifactId>JDA_discord_bot</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.3-DEV</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

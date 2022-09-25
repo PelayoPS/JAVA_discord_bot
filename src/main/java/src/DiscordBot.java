@@ -3,8 +3,13 @@ package src;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
+import src.listeners.OnMessageReceived;
+import src.listeners.OnReady;
+import src.listeners.OnUserJoin;
+import src.listeners.OnUserLeave;
 
 import javax.security.auth.login.LoginException;
 
@@ -59,6 +64,13 @@ public class DiscordBot {
          */
         builder.setActivity(Activity.streaming("Follow my author :D","https://www.twitch.tv/pelayo_p_s"));//sets the bot activity
         addListeners(builder);//adds the listeners to the bot
+        /*
+         * enables all intents
+         * if your are going to have this bot in a lot of servers, you should just enable the intents you need
+         */
+        builder.enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS));
+        builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+
         shardManager = builder.build();//builds the shard manager instance
     }
 
@@ -67,8 +79,10 @@ public class DiscordBot {
      * @param builder the shard manager builder
      */
     private void addListeners(DefaultShardManagerBuilder builder) {
-        builder.addEventListeners(new src.listeners.OnReady());//adds the OnReady listener
-        builder.addEventListeners(new src.listeners.OnMessageReceived());//adds the OnMessageReceived listener
+        builder.addEventListeners(new OnReady());//adds the OnReady listener
+        builder.addEventListeners(new OnMessageReceived(this));//adds the OnMessageReceived listener
+        builder.addEventListeners(new OnUserJoin(this));//adds the OnUserJoin listener
+        builder.addEventListeners(new OnUserLeave(this));//adds the OnUserLeave listener
     }
 
     /**
