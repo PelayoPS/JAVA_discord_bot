@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
-import src.listeners.EventListener;
 
 import javax.security.auth.login.LoginException;
 
@@ -68,7 +67,8 @@ public class DiscordBot {
      * @param builder the shard manager builder
      */
     private void addListeners(DefaultShardManagerBuilder builder) {
-        builder.addEventListeners(new EventListener());
+        builder.addEventListeners(new src.listeners.OnReady());//adds the OnReady listener
+        builder.addEventListeners(new src.listeners.OnMessageReceived());//adds the OnMessageReceived listener
     }
 
     /**
