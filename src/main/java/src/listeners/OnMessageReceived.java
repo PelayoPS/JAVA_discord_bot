@@ -27,17 +27,17 @@ public class OnMessageReceived extends ListenerAdapter {
          *  if message from private message
          *     [dm] [username] [message]
          */
-        String textlogchannelid = bot.getConfig().get("TEXTLOGCHANELLID");
-        String dmlogchannelid = bot.getConfig().get("DMLOGCHANNELID");
+        String textLogChannelId = bot.getConfig().get("TEXTLOGCHANELLID");
+        String dmLogChannelId = bot.getConfig().get("DMLOGCHANNELID");
         if (event.getMessage().getAuthor().isBot()) {//messages from bots are ignored
             return;
         }
         if (event.isFromGuild()) {//if message is from a server
-            event.getGuild().getTextChannelById(textlogchannelid)
+            event.getGuild().getTextChannelById(textLogChannelId)
                     .sendMessage("[" + event.getChannel().getAsMention() + "] [" + event.getAuthor().getAsMention() + "] " +
                             '"' + event.getMessage().getContentRaw()+ '"').queue();
         } else {//if message is from a private message
-            bot.getShardManager().getTextChannelById(dmlogchannelid)//if you try to get channel as if it was from guild it will throw an exception
+            bot.getShardManager().getTextChannelById(dmLogChannelId)//if you try to get channel as if it was from guild it will throw an exception
                     .sendMessage("[dm] [" + event.getAuthor().getAsTag() + "] " +
                             '"' + event.getMessage().getContentRaw() + '"').queue();
         }

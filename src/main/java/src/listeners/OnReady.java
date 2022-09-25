@@ -1,5 +1,6 @@
 package src.listeners;
 
+import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class OnReady extends ListenerAdapter {
@@ -8,7 +9,7 @@ public class OnReady extends ListenerAdapter {
      * Prints a message to the console when the bot is ready.
      */
     @Override
-    public void onReady(net.dv8tion.jda.api.events.ReadyEvent event) {
+    public void onReady(ReadyEvent event) {
         System.out.println("Bot is ready!");
     }
 
