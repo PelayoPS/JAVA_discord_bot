@@ -25,7 +25,7 @@ public class DiscordBot {
 
     /**
      * Main method, used to start the bot
-     * @param args //not used
+     * @param args not used
      */
     public static void main(String[] args) {
         try {

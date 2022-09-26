@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="JDA_discord_bot:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/JDA_discord_bot_jar</output-path>
+    <output-path>$PROJECT_DIR$/build</output-path>
     <root id="archive" name="JDA_discord_bot_jar.jar">
       <element id="module-output" name="JDA_discord_bot" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/1.4.10/kotlin-stdlib-1.4.10.jar" path-in-jar="/" />
