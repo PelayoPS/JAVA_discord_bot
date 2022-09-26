@@ -46,13 +46,13 @@ public class DiscordBot {
         addCommandListeners();//adds the command listeners
         //console log name of commands loaded
         System.out.println("Commands loaded: " + jda.retrieveCommands().complete());
-        setActivityAndStatus(jda);
+        setActivityAndStatus();//sets the activity and status
         addListeners(jda);//adds the listeners to the bot
     }
 
     /**
      * Adds all the listeners to the bot
-     * @param builder the shard manager builder
+     * @param jda the JDA instance
      */
     private void addListeners(JDA jda) {
         jda.addEventListener(new OnReady());//adds the OnReady listener
@@ -71,9 +71,8 @@ public class DiscordBot {
 
     /**
      * sets the activity and status of the bot
-     * @param jda
      */
-    private void setActivityAndStatus(JDA jda) {
+    private void setActivityAndStatus() {
         jda.getPresence().setActivity(Activity.streaming("Follow my author :D","https://www.twitch.tv/pelayo_p_s"));
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
     }
@@ -81,7 +80,7 @@ public class DiscordBot {
     /**
      * gets the JDA instance
      * to be used in other classes
-     * @return
+     * @return the JDA instance
      */
     public JDA getJda() {
         return jda;
@@ -92,7 +91,7 @@ public class DiscordBot {
      */
     private void updateCommands() {
         //command list
-        List<CommandData> commandList = new ArrayList<CommandData>();
+        List<CommandData> commandList = new ArrayList<>();
         commandList.addAll(ModCommandUpdater.updateCommands(jda));
         commandList.addAll(GeneralCommandUpdater.updateCommands(jda));
         jda.updateCommands().addCommands(commandList).queue();
