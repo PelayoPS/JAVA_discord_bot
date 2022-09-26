@@ -37,7 +37,7 @@ public class OnMessageReceived extends ListenerAdapter {
                     .sendMessage("[" + event.getChannel().getAsMention() + "] [" + event.getAuthor().getAsMention() + "] " +
                             '"' + event.getMessage().getContentRaw()+ '"').queue();
         } else {//if message is from a private message
-            bot.getShardManager().getTextChannelById(dmLogChannelId)//if you try to get channel as if it was from guild it will throw an exception
+            bot.getJda().getTextChannelById(dmLogChannelId)//if you try to get channel as if it was from guild it will throw an exception
                     .sendMessage("[dm] [" + event.getAuthor().getAsTag() + "] " +
                             '"' + event.getMessage().getContentRaw() + '"').queue();
         }
