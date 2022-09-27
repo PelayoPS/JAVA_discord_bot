@@ -35,6 +35,10 @@ public class DiscordBot {
         }
     }
 
+    /**
+     * Default constructor for the DiscordBot class
+     * @throws LoginException if the bot token is invalid
+     */
     public DiscordBot() throws LoginException {
         config = Dotenv.load();//Used to load all the environment variables from the .env file
         jda = JDABuilder.createDefault(config.get("TOKEN"))//creates a new JDA instance

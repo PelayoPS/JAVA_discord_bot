@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModCommandUpdater {
+    /**
+     * Updates the commands for the moderation category
+     * @param jda the JDA instance
+     * @return a list of commands
+     */
     public static List<CommandData> updateCommands(JDA jda) {
         //command list
         List<CommandData> commandList = new ArrayList<CommandData>();
@@ -23,6 +28,10 @@ public class ModCommandUpdater {
         return commandList;
     }
 
+    /**
+     * Adds the command listeners for the moderation category
+     * @param jda the JDA instance
+     */
     public static void addCommandListeners(JDA jda) {
         jda.addEventListener(new Ban());
         jda.addEventListener(new Kick());
