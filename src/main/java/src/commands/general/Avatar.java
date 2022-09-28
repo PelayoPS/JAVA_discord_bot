@@ -9,6 +9,8 @@ public class Avatar extends ListenerAdapter {
     /**
      * When a slash command with the name avatar is used this method is called
      * it sends the avatar of the user given to the channel the command was used in
+     * if the user doesn't have an avatar it sends a message saying they don't have an avatar
+     * with the default avatar
      * @param event
      */
     @Override
