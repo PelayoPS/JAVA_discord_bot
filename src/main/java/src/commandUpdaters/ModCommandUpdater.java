@@ -13,10 +13,9 @@ import java.util.List;
 public class ModCommandUpdater {
     /**
      * Updates the commands for the moderation category
-     * @param jda the JDA instance
      * @return a list of commands
      */
-    public static List<CommandData> updateCommands(JDA jda) {
+    public static List<CommandData> updateCommands() {
         //command list
         List<CommandData> commandList = new ArrayList<CommandData>();
         commandList.add(//ban command

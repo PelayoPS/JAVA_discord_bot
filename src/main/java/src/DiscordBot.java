@@ -96,8 +96,8 @@ public class DiscordBot {
     private void updateCommands() {
         //command list
         List<CommandData> commandList = new ArrayList<>();
-        commandList.addAll(ModCommandUpdater.updateCommands(jda));
-        commandList.addAll(GeneralCommandUpdater.updateCommands(jda));
+        commandList.addAll(ModCommandUpdater.updateCommands());
+        commandList.addAll(GeneralCommandUpdater.updateCommands());
         jda.updateCommands().addCommands(commandList).queue();
 
     }
