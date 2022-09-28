@@ -22,7 +22,11 @@ public class Avatar extends ListenerAdapter {
                 event.replyEmbeds(message).queue(); // reply immediately
             }
         } catch (IllegalArgumentException e) {
-            event.reply("The user has no avatar").queue();
+            MessageEmbed message = new EmbedBuilder()
+                    .setTitle(event.getOption("user").getAsUser().getName() + " does not have an avatar")
+                    .setImage(event.getOption("user").getAsUser().getDefaultAvatarUrl() + "?format=png&dynamic=true&size=1024")
+                    .build();
+            event.replyEmbeds(message).queue(); // reply immediately
         }
     }
 }
