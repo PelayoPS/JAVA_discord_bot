@@ -16,11 +16,10 @@ public class Restart extends ListenerAdapter {
      */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        //if the user is not admin then return
-        if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
-            return;
-        }
         if (event.getName().equals("restart")) {
+            if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
+                return;
+            }
             event.reply("Restarting...").setEphemeral(true).queue();
             try {
                 Main.bot = new DiscordBot();//creates a new instance of the bot

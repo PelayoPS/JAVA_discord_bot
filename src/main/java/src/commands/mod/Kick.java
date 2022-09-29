@@ -13,10 +13,10 @@ public class Kick extends ListenerAdapter {
      */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        if(!event.getMember().getPermissions().contains(Permission.KICK_MEMBERS)){
-            return;
-        }
         if (event.getName().equals("kick")) {
+            if(!event.getMember().getPermissions().contains(Permission.KICK_MEMBERS)){
+                return;
+            }
             event.reply(event.getOption("user").getAsUser().getAsTag() + " has been kicked").queue(); // reply immediately
             User user = event.getOption("user").getAsUser();
             event.getGuild().kick(user).queue();

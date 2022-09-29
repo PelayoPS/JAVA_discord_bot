@@ -32,6 +32,7 @@ public class ModCommandUpdater {
         commandList.add(//mute command
                 Commands.slash("mute", "Mutes the user given")
                         .addOption(OptionType.USER, "user", "The user to mute", true)
+                        .addOption(OptionType.STRING, "reason", "The reason for the mute", true)
                         .addOption(OptionType.INTEGER, "time", "The time to mute the user for", true));
         commandList.add(//warn command
                 Commands.slash("warn", "Warns the user given")

@@ -16,12 +16,12 @@ public class Warn extends ListenerAdapter {
      */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        //if the user is not admin then return
-        if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
-            return;
-        }
         if (event.getName().equals("warn")) {
+            if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
+                return;
+            }
             warnUser(event, event.getOption("user"), event.getOption("reason"));
+            event.reply("User [" + event.getOption("user").getAsUser().getAsTag() + "] warned").queue();
         }
     }
 
@@ -31,11 +31,15 @@ public class Warn extends ListenerAdapter {
      */
     private void warnUser(SlashCommandInteractionEvent event, OptionMapping user, OptionMapping reason){
         user.getAsUser().openPrivateChannel().queue((channel) -> {
-            channel.sendMessage("You have been warned for" + reason.getAsString()).queue();
+            channel.sendMessage("You have been warned for " + reason.getAsString()).queue();
         });
+        logWarn(event, user, reason);
+    }
+
+    private void logWarn(SlashCommandInteractionEvent event, OptionMapping user, OptionMapping reason){
         event.getGuild().getTextChannelById(config.get("WARNLOGCHANNELID"))
-                .sendMessage(user.getAsUser().getName() +
-                        " was warned by " + event.getUser().getName() +
+                .sendMessage(user.getAsUser().getAsTag() +
+                        " was warned by " + event.getUser().getAsTag() +
                         " for " + reason.getAsString()).queue();
     }
 }

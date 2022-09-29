@@ -27,6 +27,7 @@ public class Help extends ListenerAdapter {
                     .addField("General", GeneralCommandUpdater.getGeneralCommands().toString(), false)
                     .addField("Mod", ModCommandUpdater.getModerationCommands().toString(), false)
                     .build();
+            event.replyEmbeds(messageEmbed).queue(); // reply immediately
         }
     }
 }

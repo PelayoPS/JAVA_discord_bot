@@ -13,10 +13,10 @@ public class Ban extends ListenerAdapter {
      */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        if(!event.getMember().getPermissions().contains(Permission.BAN_MEMBERS)){
-            return;
-        }
         if (event.getName().equals("ban")) {
+            if(!event.getMember().getPermissions().contains(Permission.BAN_MEMBERS)){
+                return;
+            }
             event.reply(event.getOption("user").getAsUser().getAsTag() + " has been banned").queue(); // reply immediately
             User user = event.getOption("user").getAsUser();
             event.getGuild().ban(user, 0, null).queue();

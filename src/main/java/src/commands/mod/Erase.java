@@ -17,15 +17,28 @@ public class Erase extends ListenerAdapter {
      */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        if(!event.getMember().getPermissions().contains(Permission.MESSAGE_MANAGE)){
-            return;
-        }
         if (event.getName().equals("erase")) {
-            int amountToDelete = event.getOption("amount").getAsInt();
+            if(!event.getMember().getPermissions().contains(Permission.MESSAGE_MANAGE)){
+                return;
+            }
             TextChannel channel = event.getOption("channel").getAsChannel().asTextChannel();
-            channel.deleteMessages(getMessagesToDelete(amountToDelete,channel)).queue();
-        }
+            int amount = event.getOption("amount").getAsInt();
+            List<Message> messages = getMessagesToDelete(amount, channel);
+            if(messages.size() < 2) {
+                messages.get(0).delete().queue();
+            } else {
+                channel.deleteMessages(messages).queue();
+            }
+            event.reply("Deleted " + amount + " messages").queue();
+            event.getHook().editOriginal("This message will be deleted in 5 seconds").queueAfter(5, java.util.concurrent.TimeUnit.SECONDS);
+            event.getHook().editOriginal("This message will be deleted in 4 seconds").queueAfter(6, java.util.concurrent.TimeUnit.SECONDS);
+            event.getHook().editOriginal("This message will be deleted in 3 seconds").queueAfter(7, java.util.concurrent.TimeUnit.SECONDS);
+            event.getHook().editOriginal("This message will be deleted in 2 seconds").queueAfter(8, java.util.concurrent.TimeUnit.SECONDS);
+            event.getHook().editOriginal("This message will be deleted in 1 seconds").queueAfter(9, java.util.concurrent.TimeUnit.SECONDS);
+            event.getHook().deleteOriginal().queueAfter(10, java.util.concurrent.TimeUnit.SECONDS);
+            }
     }
+
 
     /**
      * private method to make the code cleaner

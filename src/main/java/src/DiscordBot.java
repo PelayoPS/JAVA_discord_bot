@@ -33,11 +33,13 @@ public class DiscordBot {
                 .setActivity(Activity.playing("with the code"))//sets the activity
                 .setStatus(OnlineStatus.ONLINE)//sets the status
                 .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))//for huge bots enable only the intents you need
+                .enableIntents(GatewayIntent.GUILD_PRESENCES)//enables the presence intent
                 .build();//builds the JDA instance
         updateCommands();//updates the commands
         addCommandListeners();//adds the command listeners
         //console log name of commands loaded
-        System.out.println("Commands loaded: " + jda.retrieveCommands().complete());
+        System.out.println("Commands loaded: ");
+        jda.retrieveCommands().complete().forEach(command -> System.out.println(command.getName()));
         setActivityAndStatus();//sets the activity and status
         addListeners(jda);//adds the listeners to the bot
     }
