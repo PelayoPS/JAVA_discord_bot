@@ -6,6 +6,9 @@ public class Main {
     //bot variable to be accesible in other classes
     public static DiscordBot bot;
 
+    public static Thread thread;
+
+
     /**
      * Main method, used to start the bot
      * @param args not used
@@ -17,6 +20,7 @@ public class Main {
             System.out.println("ERROR: Provided bot token is invalid");// prints the error message
         }
     }
+
 }
 
 
