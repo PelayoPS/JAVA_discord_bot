@@ -15,14 +15,22 @@ public class Avatar extends ListenerAdapter {
      */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
+        if (event.getName().equals("avatar")) {
+            getAvatar(event);
+        }
+    }
+
+    /**
+     * private method to make the code cleaner
+     * @param event
+     */
+    private void getAvatar(SlashCommandInteractionEvent event){
         try {
-            if (event.getName().equals("avatar")) {
-                MessageEmbed message = new EmbedBuilder()
-                        .setTitle("Avatar of " + event.getOption("user").getAsUser().getName())
-                        .setImage(event.getOption("user").getAsUser().getAvatarUrl() + "?format=png&dynamic=true&size=1024")
-                        .build();
-                event.replyEmbeds(message).queue(); // reply immediately
-            }
+            MessageEmbed message = new EmbedBuilder()
+                    .setTitle("Avatar of " + event.getOption("user").getAsUser().getName())
+                    .setImage(event.getOption("user").getAsUser().getAvatarUrl() + "?format=png&dynamic=true&size=1024")
+                    .build();
+            event.replyEmbeds(message).queue(); // reply immediately
         } catch (IllegalArgumentException e) {
             MessageEmbed message = new EmbedBuilder()
                     .setTitle(event.getOption("user").getAsUser().getName() + " does not have an avatar")

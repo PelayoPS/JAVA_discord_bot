@@ -21,19 +21,7 @@ import java.util.List;
 public class DiscordBot {
 
     private final JDA jda;
-    private final Dotenv config;
-
-    /**
-     * Main method, used to start the bot
-     * @param args not used
-     */
-    public static void main(String[] args) {
-        try {
-            DiscordBot bot = new DiscordBot();//creates a new instance of the bot
-        } catch (LoginException e) {
-            System.out.println("ERROR: Provided bot token is invalid");// prints the error message
-        }
-    }
+    private static Dotenv config = null;
 
     /**
      * Default constructor for the DiscordBot class
@@ -69,7 +57,7 @@ public class DiscordBot {
      *  Used to get the config instance in other classes
      *  @return the config instance
      */
-    public Dotenv getConfig() {
+    public static Dotenv getConfig() {
         return config;
     }
 
@@ -99,7 +87,6 @@ public class DiscordBot {
         commandList.addAll(ModCommandUpdater.updateCommands());
         commandList.addAll(GeneralCommandUpdater.updateCommands());
         jda.updateCommands().addCommands(commandList).queue();
-
     }
 
     /**
