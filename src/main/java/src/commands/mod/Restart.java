@@ -3,10 +3,7 @@ package src.commands.mod;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import src.DiscordBot;
 import src.Main;
-
-import javax.security.auth.login.LoginException;
 
 
 public class Restart extends ListenerAdapter {
@@ -22,11 +19,23 @@ public class Restart extends ListenerAdapter {
                 return;
             }
             event.reply("Restarting...").setEphemeral(true).queue();
+
             try {
-                Main.bot = new DiscordBot();//creates a new instance of the bot
-            } catch (LoginException e) {
-                System.out.println("ERROR: Provided bot token is invalid");// prints the error message
+                Main.bot.getJda().shutdown();//this makes the bot go offline so a new instance can be created
+                restart();
+            }catch (Exception e) {
             }
+        }
+    }
+
+    public void restart() throws Exception {
+        try
+        {
+            throw new Exception("Force restart!");
+        }
+        finally
+        {
+            Main.main(new String[0]);
         }
     }
 }
