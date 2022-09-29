@@ -8,6 +8,7 @@ import src.Main;
 
 import javax.security.auth.login.LoginException;
 
+
 public class Restart extends ListenerAdapter {
     /**
      * When a slash command with the name restart is used this method is called

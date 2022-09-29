@@ -6,9 +6,6 @@ public class Main {
     //bot variable to be accesible in other classes
     public static DiscordBot bot;
 
-    public static Thread thread;
-
-
     /**
      * Main method, used to start the bot
      * @param args not used
