@@ -5,24 +5,31 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.DiscordBot;
+import src.commands.util.Category;
+import src.commands.util.CommandInterface;
 
-public class Warn extends ListenerAdapter {
+public class Warn implements CommandInterface {
     Dotenv config = DiscordBot.getConfig();
+
+    private static String name = "warn";
+
+    private Category category = Category.MOD;
+
     /**
      * When a slash command with the name warn is used this method is called
      * it warns the user given in the channel provided
      * @param event
      */
     @Override
-    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        if (event.getName().equals("warn")) {
-            if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
-                return;
-            }
-            warnUser(event, event.getOption("user"), event.getOption("reason"));
-            event.reply("User [" + event.getOption("user").getAsUser().getAsTag() + "] warned").queue();
+    public void handle(SlashCommandInteractionEvent event) {
+        if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
+            return;
         }
+        warnUser(event, event.getOption("user"), event.getOption("reason"));
+        event.reply("User [" + event.getOption("user").getAsUser().getAsTag() + "] warned").queue();
     }
 
     /**
@@ -41,5 +48,24 @@ public class Warn extends ListenerAdapter {
                 .sendMessage(user.getAsUser().getAsTag() +
                         " was warned by " + event.getUser().getAsTag() +
                         " for " + reason.getAsString()).queue();
+    }
+
+    @Override
+    public CommandData getSlash() {
+        return Commands.slash(name, "Restarts the bot");
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Category getCategory() {
+        return category;
+    }
+
+    public static String getNameForManagement(){
+        return name;
     }
 }

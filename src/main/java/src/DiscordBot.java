@@ -5,23 +5,22 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import src.commandUpdaters.GeneralCommandUpdater;
-import src.commandUpdaters.ModCommandUpdater;
+import src.commands.util.CommandManager;
+import src.commands.util.Invoker;
 import src.listeners.OnMessageReceived;
 import src.listeners.OnReady;
 import src.listeners.OnUserJoin;
 import src.listeners.OnUserLeave;
 
 import javax.security.auth.login.LoginException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DiscordBot {
 
     private final JDA jda;
     private static Dotenv config = null;
+
+    private CommandManager commandManager;
 
     /**
      * Default constructor for the DiscordBot class
@@ -35,6 +34,7 @@ public class DiscordBot {
                 .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))//for huge bots enable only the intents you need
                 .enableIntents(GatewayIntent.GUILD_PRESENCES)//enables the presence intent
                 .build();//builds the JDA instance
+        this.commandManager = new CommandManager();
         updateCommands();//updates the commands
         addCommandListeners();//adds the command listeners
         //console log name of commands loaded
@@ -84,19 +84,14 @@ public class DiscordBot {
      * updates the commands
      */
     private void updateCommands() {
-        //command list
-        List<CommandData> commandList = new ArrayList<>();
-        commandList.addAll(ModCommandUpdater.updateCommands());
-        commandList.addAll(GeneralCommandUpdater.updateCommands());
-        jda.updateCommands().addCommands(commandList).queue();
+        jda.updateCommands().addCommands(this.commandManager.getCommandDataAll()).queue();
     }
 
     /**
      * adds the command listeners
      */
     private void addCommandListeners() {
-        ModCommandUpdater.addCommandListeners(jda);
-        GeneralCommandUpdater.addCommandListeners(jda);
+        jda.addEventListener(new Invoker(this.commandManager));
     }
 
 

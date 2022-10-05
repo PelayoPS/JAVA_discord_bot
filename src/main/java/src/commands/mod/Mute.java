@@ -7,30 +7,38 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.exceptions.HierarchyException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.DiscordBot;
+import src.commands.util.Category;
+import src.commands.util.CommandInterface;
 
 import java.util.List;
 
-public class Mute extends ListenerAdapter {
+public class Mute implements CommandInterface {
+
+    private static String name = "mute";
+
+    private Category category = Category.MOD;
 
     Dotenv config = DiscordBot.getConfig();
+
     /**
      * When a slash command with the name mute is used this method is called
      * it mutes the user given for the amount of time given
      * @param event
      */
     @Override
-    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-        if (event.getName().equals("mute")) {
-            if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
-                return;
-            }
-            try {
-                muteUser(event.getOption("user"), event.getOption("time"));
-                logMute(event, event.getOption("user"), event.getOption("time"));
-            } catch (HierarchyException e) {
-                event.reply("I can't mute a user with higher or equal role than me").queue();
-            }
+    public void handle(SlashCommandInteractionEvent event) {
+        if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
+            return;
+        }
+        try {
+            muteUser(event.getOption("user"), event.getOption("time"));
+            logMute(event, event.getOption("user"), event.getOption("time"));
+        } catch (HierarchyException e) {
+            event.reply("I can't mute a user with higher or equal role than me").queue();
         }
     }
 
@@ -79,5 +87,28 @@ public class Mute extends ListenerAdapter {
                     " was muted by " + event.getUser().getAsTag() +
                     " for " + time.getAsLong() + " seconds with reason: " + event.getOption("reason").getAsString()).queue();
         event.reply("Muted " + user.getAsUser().getAsTag() + " for " + time.getAsLong() + " seconds").queue();
+    }
+
+    @Override
+    public CommandData getSlash() {
+        CommandData command = Commands.slash(name, "Mutes the user given")
+                .addOption(OptionType.USER, "user", "The user to mute", true)
+                .addOption(OptionType.STRING, "reason", "The reason for the mute", true)
+                .addOption(OptionType.INTEGER, "time", "The time to mute the user for", true);
+        return command;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Category getCategory() {
+        return category;
+    }
+
+    public static String getNameForManagement() {
+        return name;
     }
 }
