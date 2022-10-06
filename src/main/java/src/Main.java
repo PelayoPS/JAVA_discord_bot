@@ -1,6 +1,10 @@
 package src;
 
+import io.github.cdimascio.dotenv.Dotenv;
+import src.gui.gui.MainWindow;
+
 import javax.security.auth.login.LoginException;
+import java.awt.*;
 import java.util.Scanner;
 
 public class Main {
@@ -12,6 +16,19 @@ public class Main {
      * @param args not used
      */
     public static void main(String[] args) {
+        //starts the gui setup
+        try {
+            Dotenv config = Dotenv.load();
+            //if no exception was raised we can continue
+            initializeBot(args);
+        } catch (Exception e) {//only runs the gui setup if the .env is not found
+            initializeGui();
+            //after creating the .env with the gui setup we can continue
+            initializeBot(args);
+        }
+    }
+
+    private static void initializeBot(String[] args) {
         try {
             /*
              * asks the user if they want to use the dev or prod token
@@ -34,6 +51,19 @@ public class Main {
         } catch (LoginException e) {
             System.out.println("ERROR: Provided bot token is invalid");// prints the error message
         }
+    }
+
+    private static void initializeGui() {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    MainWindow window = new MainWindow();
+                    window.getFrame().setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }

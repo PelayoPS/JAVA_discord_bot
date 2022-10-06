@@ -14,7 +14,10 @@ public class UserJoinLogger implements Logger<GuildMemberJoinEvent>{
     }
 
     @Override
-    public void logEvent(GuildMemberJoinEvent event) {
+    public void logEvent(GuildMemberJoinEvent event, boolean isDebug) {
+        if (isDebug) {
+            return;
+        }
         /*
          * Sends a message in the serverjoinlog channel when a user joins a guild.
          * format: [username] joined the server.

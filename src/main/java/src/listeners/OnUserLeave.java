@@ -17,6 +17,6 @@ public class OnUserLeave extends ListenerAdapter {
      */
     @Override
     public void onGuildMemberRemove(GuildMemberRemoveEvent event) {
-        new UserLeaveLogger(bot).logEvent(event);
+        new UserLeaveLogger(bot).logEvent(event, DiscordBot.isProductionEnabled());
     }
 }

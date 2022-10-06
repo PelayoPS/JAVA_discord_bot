@@ -6,12 +6,12 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import src.util.commandPattern.CommandManager;
-import src.util.commandPattern.Invoker;
 import src.listeners.OnMessageReceived;
 import src.listeners.OnReady;
 import src.listeners.OnUserJoin;
 import src.listeners.OnUserLeave;
+import src.util.commandPattern.CommandManager;
+import src.util.commandPattern.Invoker;
 
 import javax.security.auth.login.LoginException;
 
@@ -22,15 +22,23 @@ public class DiscordBot {
 
     private CommandManager commandManager;
 
+    private static boolean isProductionEnabled;
+
     /**
      * Default constructor for the DiscordBot class
      * @throws LoginException if the bot token is invalid
      */
     public DiscordBot(boolean productionEnabled) throws LoginException {
+        this.isProductionEnabled = productionEnabled;
         if (productionEnabled){
             initialize("TOKENPROD");
         } else {
-            initialize("TOKENDEV");
+            if(config.get("TOKENDEV").equals("")){
+                initialize("TOKENPROD");//so production users dont mess up
+            } else {
+                initialize("TOKENDEV");
+            }
+
         }
     }
 
@@ -101,7 +109,8 @@ public class DiscordBot {
         jda.addEventListener(new Invoker(this.commandManager));
     }
 
-
-
+    public static boolean isProductionEnabled(){
+        return isProductionEnabled;
+    }
 
 }

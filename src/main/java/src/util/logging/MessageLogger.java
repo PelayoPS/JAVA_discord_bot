@@ -11,7 +11,10 @@ public class MessageLogger implements Logger<MessageReceivedEvent> {
         this.bot = discordBot;
     }
 
-    public void logEvent(MessageReceivedEvent event) {
+    public void logEvent(MessageReceivedEvent event, boolean isDebug) {
+        if (isDebug) {
+            return;
+        }
         /*
          * Logs the message to the text logs channel.
          * format:

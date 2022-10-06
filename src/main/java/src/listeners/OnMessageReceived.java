@@ -20,6 +20,6 @@ public class OnMessageReceived extends ListenerAdapter {
      */
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        new MessageLogger(bot).logEvent(event);
+        new MessageLogger(bot).logEvent(event, DiscordBot.isProductionEnabled());
     }
 }

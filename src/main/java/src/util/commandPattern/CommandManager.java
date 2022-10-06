@@ -38,7 +38,7 @@ public class CommandManager {
     private void registerCommands() {
         //general commands
         commands.put(Avatar.getNameForManagement(), new Avatar());
-        commands.put(Help.getNameForManagement(), new Help());
+        commands.put(Help.getNameForManagement(), new Help(this));
         commands.put(Ping.getNameForManagement(), new Ping());
         commands.put(Repeat.getNameForManagement(), new Repeat());
         commands.put(StreamOnline.getNameForManagement(), new StreamOnline());
@@ -73,6 +73,22 @@ public class CommandManager {
         commands.values().stream()
                 .filter(command -> command.getCategory() == Category.MOD)
                 .forEach(command -> System.out.println("\t" + command.getName()));
+    }
+
+    public List<String> getGeneralCommands() {
+        List<String> commandList = new ArrayList<>();
+        commands.values().stream()
+                .filter(command -> command.getCategory() == Category.GENERAL)
+                .forEach(command -> commandList.add(command.getName()));
+        return commandList;
+    }
+
+    public List<String> getModCommands() {
+        List<String> commandList = new ArrayList<>();
+        commands.values().stream()
+                .filter(command -> command.getCategory() == Category.MOD)
+                .forEach(command -> commandList.add(command.getName()));
+        return commandList;
     }
 
 }

@@ -10,7 +10,10 @@ public class SlashCommandLogger implements Logger<SlashCommandInteractionEvent> 
     }
 
     @Override
-    public void logEvent(SlashCommandInteractionEvent event) {
+    public void logEvent(SlashCommandInteractionEvent event, boolean isDebug) {
+        if (isDebug) {
+            return;
+        }
         /*
          * Sends a message to the COMMANDLOGCHANNELID with the format:
          * [COMMANDNAME] was used by [USER] in [CHANNEL] in [GUILD] at [TIME] with response [RESPONSE]

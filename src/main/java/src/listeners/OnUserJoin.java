@@ -17,6 +17,6 @@ public class OnUserJoin extends ListenerAdapter {
      */
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
-        new UserJoinLogger(bot).logEvent(event);
+        new UserJoinLogger(bot).logEvent(event, DiscordBot.isProductionEnabled());
     }
 }

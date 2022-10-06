@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
+import src.util.commandPattern.CommandManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,13 @@ public class Help implements CommandInterface {
 
     private static String name = "help";
 
+    private final CommandManager commandManager;
+
     private Category category = Category.GENERAL;
+
+    public Help(CommandManager commandManager) {
+        this.commandManager = commandManager;
+    }
 
     /**
      * When a slash command with the name help is used this method is called
@@ -32,7 +39,8 @@ public class Help implements CommandInterface {
         MessageEmbed messageEmbed = new EmbedBuilder()
                 .setTitle("Help")
                 .setDescription("Here is a list of all the commands")
-                .addField("General", getCommandList(event).toString(), false)
+                .addField("General", commandManager.getGeneralCommands().toString(), false)
+                .addField("Mod", commandManager.getModCommands().toString(), false)
                 .build();
         event.replyEmbeds(messageEmbed).queue(); // reply immediately
     }

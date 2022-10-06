@@ -20,7 +20,7 @@ public class UpTimeLogger implements Logger<ReadyEvent> {
         this.bot = bot;
     }
     @Override
-    public void logEvent(ReadyEvent event) {
+    public void logEvent(ReadyEvent event, boolean isDebug) {
         System.out.println("Bot is ready!");
     }
 
