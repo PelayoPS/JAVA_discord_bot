@@ -3,13 +3,12 @@ package src.commands.mod;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.DiscordBot;
-import src.commands.util.Category;
-import src.commands.util.CommandInterface;
+import src.util.commandPattern.Category;
+import src.util.commandPattern.CommandInterface;
 
 public class Warn implements CommandInterface {
     Dotenv config = DiscordBot.getConfig();

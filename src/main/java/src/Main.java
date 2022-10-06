@@ -3,7 +3,7 @@ package src;
 import javax.security.auth.login.LoginException;
 
 public class Main {
-    //bot variable to be accesible in other classes
+    //bot variable to be accessible in other classes
     public static DiscordBot bot;
 
     /**

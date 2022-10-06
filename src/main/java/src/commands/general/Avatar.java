@@ -6,8 +6,8 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import src.commands.util.Category;
-import src.commands.util.CommandInterface;
+import src.util.commandPattern.Category;
+import src.util.commandPattern.CommandInterface;
 
 public class Avatar implements CommandInterface {
     private static String name = "avatar";

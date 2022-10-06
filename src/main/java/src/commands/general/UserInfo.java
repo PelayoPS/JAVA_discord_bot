@@ -3,13 +3,12 @@ package src.commands.general;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import src.commands.util.Category;
-import src.commands.util.CommandInterface;
+import src.util.commandPattern.Category;
+import src.util.commandPattern.CommandInterface;
 
 public class UserInfo implements CommandInterface {
 

@@ -5,11 +5,10 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
-import src.commands.util.Category;
-import src.commands.util.CommandInterface;
+import src.util.commandPattern.Category;
+import src.util.commandPattern.CommandInterface;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -6,8 +6,8 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import src.commands.util.CommandManager;
-import src.commands.util.Invoker;
+import src.util.commandPattern.CommandManager;
+import src.util.commandPattern.Invoker;
 import src.listeners.OnMessageReceived;
 import src.listeners.OnReady;
 import src.listeners.OnUserJoin;
@@ -34,12 +34,11 @@ public class DiscordBot {
                 .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))//for huge bots enable only the intents you need
                 .enableIntents(GatewayIntent.GUILD_PRESENCES)//enables the presence intent
                 .build();//builds the JDA instance
-        this.commandManager = new CommandManager();
+        this.commandManager = new CommandManager(jda);
         updateCommands();//updates the commands
         addCommandListeners();//adds the command listeners
         //console log name of commands loaded
-        System.out.println("Commands loaded: ");
-        jda.retrieveCommands().complete().forEach(command -> System.out.println(command.getName()));
+        commandManager.printCommands();
         setActivityAndStatus();//sets the activity and status
         addListeners(jda);//adds the listeners to the bot
     }

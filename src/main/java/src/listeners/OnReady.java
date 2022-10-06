@@ -2,6 +2,7 @@ package src.listeners;
 
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import src.util.logging.UpTimeLogger;
 
 public class OnReady extends ListenerAdapter {
     /**
@@ -10,7 +11,8 @@ public class OnReady extends ListenerAdapter {
      */
     @Override
     public void onReady(ReadyEvent event) {
-        System.out.println("Bot is ready!");
+        new UpTimeLogger(event.getJDA()).logEvent(event);
+
     }
 
 }
