@@ -23,6 +23,10 @@ public class Repeat implements CommandInterface {
         event.reply(event.getOption("content").getAsString()).queue(); // reply immediately
     }
 
+    /**
+     * returns the command data
+     * @return
+     */
     @Override
     public CommandData getSlash() {
         CommandData command = Commands.slash(name, "Repeats the content given")
@@ -30,15 +34,27 @@ public class Repeat implements CommandInterface {
         return command;
     }
 
+    /**
+     * gets the name of the command
+     * @return
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * gets the name of the command for management
+     * @return
+     */
     public static String getNameForManagement() {
         return name;
     }
 
+    /**
+     * gets the category of the command
+     * @return
+     */
     @Override
     public Category getCategory() {
         return category;

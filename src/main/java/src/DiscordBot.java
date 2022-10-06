@@ -17,7 +17,7 @@ import javax.security.auth.login.LoginException;
 
 public class DiscordBot {
 
-    private final JDA jda;
+    private JDA jda;
     private static Dotenv config = null;
 
     private CommandManager commandManager;
@@ -26,14 +26,22 @@ public class DiscordBot {
      * Default constructor for the DiscordBot class
      * @throws LoginException if the bot token is invalid
      */
-    public DiscordBot() throws LoginException {
+    public DiscordBot(boolean productionEnabled) throws LoginException {
+        if (productionEnabled){
+            initialize("TOKENPROD");
+        } else {
+            initialize("TOKENDEV");
+        }
+    }
+
+    private void initialize(String token) throws LoginException {
         config = Dotenv.load();//Used to load all the environment variables from the .env file
-        jda = JDABuilder.createDefault(config.get("TOKEN"))//creates a new JDA instance
-                .setActivity(Activity.playing("with the code"))//sets the activity
-                .setStatus(OnlineStatus.ONLINE)//sets the status
-                .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))//for huge bots enable only the intents you need
-                .enableIntents(GatewayIntent.GUILD_PRESENCES)//enables the presence intent
-                .build();//builds the JDA instance
+            jda = JDABuilder.createDefault(config.get(token))//creates a new JDA instance
+                    .setActivity(Activity.playing("with the code"))//sets the activity
+                    .setStatus(OnlineStatus.ONLINE)//sets the status
+                    .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))//for huge bots enable only the intents you need
+                    .enableIntents(GatewayIntent.GUILD_PRESENCES)//enables the presence intent
+                    .build();//builds the JDA instance
         this.commandManager = new CommandManager(jda);
         updateCommands();//updates the commands
         addCommandListeners();//adds the command listeners

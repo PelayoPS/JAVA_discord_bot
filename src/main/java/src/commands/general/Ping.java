@@ -22,20 +22,36 @@ public class Ping implements CommandInterface {
         event.reply("Pong! " + event.getJDA().getGatewayPing() + "ms").queue();
     }
 
+    /**
+     * returns the command data
+     * @return
+     */
     @Override
     public CommandData getSlash() {
         return Commands.slash(name, "Returns the ping of the bot");
     }
 
+    /**
+     * gets the name of the command
+     * @return
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * gets the name of the command for management
+     * @return
+     */
     public static String getNameForManagement() {
         return name;
     }
 
+    /**
+     * gets the category of the command
+     * @return
+     */
     @Override
     public Category getCategory() {
         return category;

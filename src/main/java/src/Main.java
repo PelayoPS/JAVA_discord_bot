@@ -1,6 +1,7 @@
 package src;
 
 import javax.security.auth.login.LoginException;
+import java.util.Scanner;
 
 public class Main {
     //bot variable to be accessible in other classes
@@ -12,7 +13,24 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            bot = new DiscordBot();//creates a new instance of the bot
+            /*
+             * asks the user if they want to use the dev or prod token
+             */
+            System.out.println("Do you want to use the dev or prod token? (dev/prod)");
+            Scanner scanner = new Scanner(System.in);
+            String token = scanner.nextLine();
+            switch (token) {
+                case "dev":
+                    bot = new DiscordBot(false);
+                    break;
+                case "prod":
+                    bot = new DiscordBot(true);
+                    break;
+                default:
+                    System.out.println("Invalid token, please use only dev or prod");
+                    main(args);
+                    break;
+            }
         } catch (LoginException e) {
             System.out.println("ERROR: Provided bot token is invalid");// prints the error message
         }
