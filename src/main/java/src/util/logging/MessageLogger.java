@@ -5,12 +5,18 @@ import src.DiscordBot;
 
 public class MessageLogger implements Logger<MessageReceivedEvent> {
 
-    private DiscordBot bot;
+    private final DiscordBot bot;
 
     public MessageLogger(DiscordBot discordBot) {
         this.bot = discordBot;
     }
 
+    /**
+     * Logs a message to the channel specified in the config file.
+     * @param event
+     * @param isDebug
+     */
+    @Override
     public void logEvent(MessageReceivedEvent event, boolean isDebug) {
         if (isDebug) {
             return;
@@ -23,8 +29,8 @@ public class MessageLogger implements Logger<MessageReceivedEvent> {
          *  if message from private message
          *     [dm] [username] [message]
          */
-        String textLogChannelId = bot.getConfig().get("TEXTLOGCHANELLID");
-        String dmLogChannelId = bot.getConfig().get("DMLOGCHANNELID");
+        String textLogChannelId = DiscordBot.getConfig().get("TEXTLOGCHANELLID");
+        String dmLogChannelId = DiscordBot.getConfig().get("DMLOGCHANNELID");
         if (event.getMessage().getAuthor().isBot()) {//messages from bots are ignored
             return;
         }

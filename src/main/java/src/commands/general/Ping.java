@@ -8,9 +8,9 @@ import src.util.commandPattern.CommandInterface;
 
 public class Ping implements CommandInterface {
 
-    private static String name = "ping";
+    private static final String name = "ping";
 
-    private Category category = Category.GENERAL;
+    private final Category category = Category.GENERAL;
 
     /**
      * When a slash command with the name ping is used this method is called

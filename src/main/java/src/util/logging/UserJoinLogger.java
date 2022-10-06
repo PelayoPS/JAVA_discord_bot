@@ -7,12 +7,17 @@ import src.DiscordBot;
 
 public class UserJoinLogger implements Logger<GuildMemberJoinEvent>{
 
-    private DiscordBot bot;
+    private final DiscordBot bot;
 
     public UserJoinLogger(DiscordBot bot) {
         this.bot = bot;
     }
 
+    /**
+     * Logs when a user joins to the channel specified in the config file.
+     * @param event
+     * @param isDebug
+     */
     @Override
     public void logEvent(GuildMemberJoinEvent event, boolean isDebug) {
         if (isDebug) {
@@ -22,7 +27,7 @@ public class UserJoinLogger implements Logger<GuildMemberJoinEvent>{
          * Sends a message in the serverjoinlog channel when a user joins a guild.
          * format: [username] joined the server.
          */
-        String channelID = bot.getConfig().get("SERVERJOINLOGCHANNELID");
+        String channelID = DiscordBot.getConfig().get("SERVERJOINLOGCHANNELID");
         /*
          * creates and embed message with the user's avatar
          * and sends it to the serverjoinlog channel

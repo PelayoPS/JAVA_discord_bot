@@ -7,19 +7,24 @@ import src.DiscordBot;
 
 public class UserLeaveLogger implements Logger<GuildMemberRemoveEvent> {
 
-    private DiscordBot bot;
+    private final DiscordBot bot;
 
     public UserLeaveLogger(DiscordBot bot) {
         this.bot = bot;
     }
 
+    /**
+     * Logs when a user leaves to the channel specified in the config file.
+     * @param event
+     * @param isDebug
+     */
     @Override
     public void logEvent(GuildMemberRemoveEvent event, boolean isDebug) {
         /*
          * Sends a message in the serverleavelog channel when a user leaves a guild.
          * format: [username] left the server.
          */
-        String channelID = bot.getConfig().get("SERVERLEAVELOGCHANNELID");
+        String channelID = DiscordBot.getConfig().get("SERVERLEAVELOGCHANNELID");
         /*
          * creates and embed message with the user's avatar
          * and sends it to the serverleavelog channel

@@ -9,9 +9,9 @@ import src.util.commandPattern.CommandInterface;
 
 public class Repeat implements CommandInterface {
 
-    private static String name = "repeat";
+    private static final String name = "repeat";
 
-    private Category category = Category.GENERAL;
+    private final Category category = Category.GENERAL;
 
     /**
      * When a slash command with the name repeat is used this method is called

@@ -14,11 +14,11 @@ import java.util.List;
 
 public class Help implements CommandInterface {
 
-    private static String name = "help";
+    private static final String name = "help";
 
     private final CommandManager commandManager;
 
-    private Category category = Category.GENERAL;
+    private final Category category = Category.GENERAL;
 
     public Help(CommandManager commandManager) {
         this.commandManager = commandManager;

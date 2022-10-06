@@ -11,9 +11,9 @@ import src.util.commandPattern.CommandInterface;
 
 public class Ban implements CommandInterface {
 
-    private static String name = "ban";
+    private static final String name = "ban";
 
-    private Category category = Category.MOD;
+    private final Category category = Category.MOD;
 
     /**
      * When a slash command with the name ban is used this method is called
@@ -30,6 +30,10 @@ public class Ban implements CommandInterface {
         event.getGuild().ban(user, 0, null).queue();
     }
 
+    /**
+     * returns the command data
+     * @return
+     */
     @Override
     public CommandData getSlash() {
         CommandData command = Commands.slash(name, "Bans the user given")
@@ -37,15 +41,27 @@ public class Ban implements CommandInterface {
         return command;
     }
 
+    /**
+     * gets the name of the command
+     * @return
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * gets the name of the command for management
+     * @return
+     */
     public static String getNameForManagement() {
         return name;
     }
 
+    /**
+     * gets the category of the command
+     * @return
+     */
     public Category getCategory() {
         return category;
     }

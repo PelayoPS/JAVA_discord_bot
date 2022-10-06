@@ -6,12 +6,18 @@ import src.DiscordBot;
 import src.util.logging.SlashCommandLogger;
 
 public class Invoker extends ListenerAdapter {
-    private CommandManager commandManager;
+    private final CommandManager commandManager;
 
     public Invoker(CommandManager manager) {
         this.commandManager = manager;
     }
 
+    /**
+     * This method is called by JDA when a slash command is received.
+     * if the permissions are correct, the command is executed.
+     * logs the command to the channel after executing it
+     * @param event
+     */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         CommandInterface command = commandManager.getCommand(event.getName());

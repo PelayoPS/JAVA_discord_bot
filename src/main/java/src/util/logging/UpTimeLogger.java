@@ -9,21 +9,31 @@ import java.util.concurrent.TimeUnit;
 public class UpTimeLogger implements Logger<ReadyEvent> {
 
     private static long startTime = 0;
-    private JDA bot;
+    private final JDA bot;
 
-    private String uptimeChannelID = DiscordBot.getConfig().get("UPTIMECHANNELID");
-    private String serverID = DiscordBot.getConfig().get("SERVERID");
-    private String messageID = DiscordBot.getConfig().get("UPTIMEMESSAGEID");
+    private final String uptimeChannelID = DiscordBot.getConfig().get("UPTIMECHANNELID");
+    private final String serverID = DiscordBot.getConfig().get("SERVERID");
+    private final String messageID = DiscordBot.getConfig().get("UPTIMEMESSAGEID");
 
     public UpTimeLogger(JDA bot) {
-        this.startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         this.bot = bot;
     }
+
+    /**
+     * Logs to the console that the bot is ready.
+     * @param event
+     * @param isDebug
+     */
     @Override
     public void logEvent(ReadyEvent event, boolean isDebug) {
         System.out.println("Bot is ready!");
     }
 
+    /**
+     * Returns the current uptime of the bot
+     * @return
+     */
     public static String upTime() {
         long currentTime = System.currentTimeMillis();
         long upTime = currentTime - startTime;

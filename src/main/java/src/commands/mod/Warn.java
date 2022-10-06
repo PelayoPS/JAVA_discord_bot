@@ -13,9 +13,9 @@ import src.util.commandPattern.CommandInterface;
 public class Warn implements CommandInterface {
     Dotenv config = DiscordBot.getConfig();
 
-    private static String name = "warn";
+    private static final String name = "warn";
 
-    private Category category = Category.MOD;
+    private final Category category = Category.MOD;
 
     /**
      * When a slash command with the name warn is used this method is called
@@ -42,6 +42,10 @@ public class Warn implements CommandInterface {
         logWarn(event, user, reason);
     }
 
+    /**
+     * logs the warning in the warn log channel
+     * @param user
+     */
     private void logWarn(SlashCommandInteractionEvent event, OptionMapping user, OptionMapping reason){
         event.getGuild().getTextChannelById(config.get("WARNLOGCHANNELID"))
                 .sendMessage(user.getAsUser().getAsTag() +
@@ -49,21 +53,33 @@ public class Warn implements CommandInterface {
                         " for " + reason.getAsString()).queue();
     }
 
+    /**
+     * @return the command data
+     */
     @Override
     public CommandData getSlash() {
         return Commands.slash(name, "Restarts the bot");
     }
 
+    /**
+     * @return the command name
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the command category
+     */
     @Override
     public Category getCategory() {
         return category;
     }
 
+    /**
+     * @return the command name for management
+     */
     public static String getNameForManagement(){
         return name;
     }

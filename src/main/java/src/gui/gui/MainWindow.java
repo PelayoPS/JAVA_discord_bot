@@ -24,7 +24,14 @@ public class MainWindow {
     }
 
     /**
-     * Initialize the contents of the frame.
+     * creates a gui with a label for each button
+     * the structure is:
+     * label1 button1
+     * label2 button2
+     * label3 button3
+     * ...
+     * so every field in the .env file has a label and a button
+     * when a button is clicked, a popup window opens to ask the user for the value
      */
     private void initialize() {
         frame = new JFrame();
@@ -112,4 +119,5 @@ public class MainWindow {
         }
         return btnTextLogChannel;
     }
+
 }

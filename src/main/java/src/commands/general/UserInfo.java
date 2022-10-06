@@ -12,9 +12,9 @@ import src.util.commandPattern.CommandInterface;
 
 public class UserInfo implements CommandInterface {
 
-    private static String name = "userinfo";
+    private static final String name = "userinfo";
 
-    private Category category = Category.GENERAL;
+    private final Category category = Category.GENERAL;
 
     /**
      * When a slash command with the name userinfo is used this method is called
@@ -87,6 +87,10 @@ public class UserInfo implements CommandInterface {
         return status;
     }
 
+    /**
+     * returns the command data
+     * @return
+     */
     @Override
     public CommandData getSlash() {
         CommandData command = Commands.slash("userinfo", "Returns a full info of the user given")
@@ -94,15 +98,27 @@ public class UserInfo implements CommandInterface {
         return command;
     }
 
+    /**
+     * gets the name of the command
+     * @return
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * gets the category of the command
+     * @return
+     */
     public static String getNameForManagement() {
         return name;
     }
 
+    /**
+     * gets the category of the command
+     * @return
+     */
     @Override
     public Category getCategory() {
         return category;

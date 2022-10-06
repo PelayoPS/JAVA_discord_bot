@@ -17,9 +17,9 @@ import java.util.List;
 
 public class Mute implements CommandInterface {
 
-    private static String name = "mute";
+    private static final String name = "mute";
 
-    private Category category = Category.MOD;
+    private final Category category = Category.MOD;
 
     Dotenv config = DiscordBot.getConfig();
 
@@ -73,10 +73,16 @@ public class Mute implements CommandInterface {
         roles.forEach((r) -> {
             //removes all other roles
             user.getAsMember().getGuild()
-                    .addRoleToMember(user.getAsMember(), r).queueAfter(time.getAsLong(), java.util.concurrent.TimeUnit.SECONDS);;
+                    .addRoleToMember(user.getAsMember(), r).queueAfter(time.getAsLong(), java.util.concurrent.TimeUnit.SECONDS);
         });
     }
 
+    /**
+     * private method to log when a user is muted
+     * @param event
+     * @param user
+     * @param time
+     */
     private void logMute(SlashCommandInteractionEvent event, OptionMapping user, OptionMapping time) {
         /*
          * sends a message to the log channel saying who muted who for how long
@@ -88,6 +94,9 @@ public class Mute implements CommandInterface {
         event.reply("Muted " + user.getAsUser().getAsTag() + " for " + time.getAsLong() + " seconds").queue();
     }
 
+    /**
+     * @return the name of the command
+     */
     @Override
     public CommandData getSlash() {
         CommandData command = Commands.slash(name, "Mutes the user given")
@@ -97,16 +106,25 @@ public class Mute implements CommandInterface {
         return command;
     }
 
+    /**
+     * @return the name of the command
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the category of the command
+     */
     @Override
     public Category getCategory() {
         return category;
     }
 
+    /**
+     * @return the name of the command for management
+     */
     public static String getNameForManagement() {
         return name;
     }

@@ -29,7 +29,7 @@ public class DiscordBot {
      * @throws LoginException if the bot token is invalid
      */
     public DiscordBot(boolean productionEnabled) throws LoginException {
-        this.isProductionEnabled = productionEnabled;
+        isProductionEnabled = productionEnabled;
         if (productionEnabled){
             initialize("TOKENPROD");
         } else {
@@ -42,6 +42,11 @@ public class DiscordBot {
         }
     }
 
+    /**
+     * Initializes the bot
+     * @param token the name of the token in the .env file
+     * @throws LoginException if the bot token is invalid
+     */
     private void initialize(String token) throws LoginException {
         config = Dotenv.load();//Used to load all the environment variables from the .env file
             jda = JDABuilder.createDefault(config.get(token))//creates a new JDA instance
@@ -109,6 +114,10 @@ public class DiscordBot {
         jda.addEventListener(new Invoker(this.commandManager));
     }
 
+    /**
+     * returns true when the bot is in production mode
+     * @return
+     */
     public static boolean isProductionEnabled(){
         return isProductionEnabled;
     }

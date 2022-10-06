@@ -12,9 +12,9 @@ import src.util.commandPattern.CommandInterface;
 
 public class Restart implements CommandInterface {
 
-    private static String name = "restart";
+    private static final String name = "restart";
 
-    private static Category category = Category.MOD;
+    private static final Category category = Category.MOD;
 
     /**
      * When a slash command with the name restart is used this method is called
@@ -36,6 +36,10 @@ public class Restart implements CommandInterface {
         }
     }
 
+    /**
+     * thows an exception to restart the bot
+     * @return
+     */
     public void restart() throws Exception {
         try
         {
@@ -47,6 +51,10 @@ public class Restart implements CommandInterface {
         }
     }
 
+    /**
+     * returns the command data
+     * @return
+     */
     @Override
     public CommandData getSlash() {
         CommandData command = Commands.slash(name, "Warns the user given")
@@ -55,16 +63,28 @@ public class Restart implements CommandInterface {
         return command;
     }
 
+    /**
+     * gets the name of the command
+     * @return
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * gets the category of the command
+     * @return
+     */
     @Override
     public Category getCategory() {
         return category;
     }
 
+    /**
+     * gets the name of the command for management
+     * @return
+     */
     public static String getNameForManagement() {
         return name;
     }

@@ -9,6 +9,9 @@ public class SlashCommandLogger implements Logger<SlashCommandInteractionEvent> 
     public SlashCommandLogger() {
     }
 
+    /**
+     * Logs the slash command to the channel specified in the config file.
+     */
     @Override
     public void logEvent(SlashCommandInteractionEvent event, boolean isDebug) {
         if (isDebug) {
@@ -16,7 +19,7 @@ public class SlashCommandLogger implements Logger<SlashCommandInteractionEvent> 
         }
         /*
          * Sends a message to the COMMANDLOGCHANNELID with the format:
-         * [COMMANDNAME] was used by [USER] in [CHANNEL] in [GUILD] at [TIME] with response [RESPONSE]
+         * [command] [user] [channel] [guild] [time] [command completed]
          */
         String channelID = DiscordBot.getConfig().get("COMMANDLOGCHANNELID");
         event.getJDA().getTextChannelById(channelID)

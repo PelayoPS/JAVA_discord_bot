@@ -15,9 +15,9 @@ import java.util.List;
 
 public class Erase implements CommandInterface {
 
-    private static String name = "erase";
+    private static final String name = "erase";
 
-    private Category category = Category.MOD;
+    private final Category category = Category.MOD;
 
     /**
      * When a slash command with the name erase is used this method is called
@@ -58,6 +58,10 @@ public class Erase implements CommandInterface {
         return messagesToDelete;
     }
 
+    /**
+     * returns the command data
+     * @return
+     */
     @Override
     public CommandData getSlash() {
         CommandData command = Commands.slash(name, "Deletes the amount of messages given in the channel provided")
@@ -66,16 +70,28 @@ public class Erase implements CommandInterface {
         return command;
     }
 
+    /**
+     * gets the name of the command
+     * @return
+     */
     @Override
     public String getName() {
         return  name;
     }
 
+    /**
+     * gets the name of the command for management
+     * @return
+     */
     @Override
     public Category getCategory() {
         return category;
     }
 
+    /**
+     * gets the category of the command
+     * @return
+     */
     public static String getNameForManagement() {
         return name;
     }

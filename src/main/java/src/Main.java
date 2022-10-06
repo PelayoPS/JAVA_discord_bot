@@ -28,6 +28,10 @@ public class Main {
         }
     }
 
+    /**
+     * Initializes the bot
+     * @param args not used
+     */
     private static void initializeBot(String[] args) {
         try {
             /*
@@ -53,6 +57,9 @@ public class Main {
         }
     }
 
+    /**
+     * Initializes the gui setup
+     */
     private static void initializeGui() {
         EventQueue.invokeLater(new Runnable() {
             public void run() {

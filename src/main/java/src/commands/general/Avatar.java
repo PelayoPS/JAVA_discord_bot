@@ -10,9 +10,9 @@ import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
 public class Avatar implements CommandInterface {
-    private static String name = "avatar";
+    private static final String name = "avatar";
 
-    private static Category category = Category.GENERAL;
+    private static final Category category = Category.GENERAL;
 
     /**
      * When a slash command with the name avatar is used this method is called

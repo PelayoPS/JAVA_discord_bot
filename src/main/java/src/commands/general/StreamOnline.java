@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 
 public class StreamOnline implements CommandInterface {
 
-    private static String name = "streamonline";
+    private static final String name = "streamonline";
 
-    private Category category = Category.GENERAL;
+    private final Category category = Category.GENERAL;
 
     /**
      * When a slash command with the name streamonline is used this method is called
