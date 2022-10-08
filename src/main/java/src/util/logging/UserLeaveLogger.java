@@ -29,13 +29,12 @@ public class UserLeaveLogger implements Logger<GuildMemberRemoveEvent> {
          * creates and embed message with the user's avatar
          * and sends it to the serverleavelog channel
          */
-        System.out.println(event.getUser().getName());
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle("User left");
         embed.setDescription("[" + event.getUser().getName() + "] left the server.");
         embed.setImage(event.getUser().getAvatarUrl());
         MessageEmbed msgEmbed = embed.build();
         event.getGuild().getTextChannelById(channelID).sendMessageEmbeds(msgEmbed).queue();
-        System.out.println("User left guild!");
+        System.out.println(event.getUser().getName() + "User left guild!");
     }
 }

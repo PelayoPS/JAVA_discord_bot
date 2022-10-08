@@ -20,17 +20,17 @@ public class OnUserJoin extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
         new UserJoinLogger(bot).logEvent(event, DiscordBot.isProductionEnabled());
-        String channelString = DiscordBot.getConfig().get("SERVERJOINCHANNELID");
+        String channelString = DiscordBot.getConfig().get("WELCOMECHANNELID");
         event.getGuild().getTextChannelById(channelString)
                 .sendMessageEmbeds(getWelcomeMessage(event)).queue();
-        event.getGuild().getTextChannelById(channelString).sendMessageEmbeds(getWelcomeMessage(event)).queue();
     }
 
     private MessageEmbed getWelcomeMessage(GuildMemberJoinEvent event) {
         MessageEmbed embed = new EmbedBuilder()
                 .setTitle("Welcome to the server!")
                 .setDescription("Welcome to the server! Please read the rules and enjoy your stay!")
-                .setAuthor(event.getUser().getAsMention(), null, event.getUser().getAvatarUrl() + "?format=png&dynamic=true&size=1024")
+                .setImage(event.getUser().getAvatarUrl() + "?format=png&dynamic=true&size=1024")
+                .addField("User", event.getUser().getAsMention(), true)
                 .build();
         return embed;
     }
