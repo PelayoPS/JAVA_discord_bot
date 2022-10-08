@@ -21,8 +21,12 @@ public class VoiceJoin implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        event.getMember().getVoiceState().getChannel().getGuild().getAudioManager().openAudioConnection(event.getMember().getVoiceState().getChannel());
-        event.reply("Joined " + event.getMember().getVoiceState().getChannel().getName()).queue();
+        if(event.getMember().getVoiceState().getChannel() != null){
+            event.getMember().getVoiceState().getChannel().getGuild().getAudioManager().openAudioConnection(event.getMember().getVoiceState().getChannel());
+            event.reply("Joined " + event.getMember().getVoiceState().getChannel().getName()).queue();
+        } else {
+            event.reply("You are not in a voice channel").queue();
+        }
     }
 
     /**

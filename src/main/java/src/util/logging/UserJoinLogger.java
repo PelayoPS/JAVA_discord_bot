@@ -20,7 +20,7 @@ public class UserJoinLogger implements Logger<GuildMemberJoinEvent>{
      */
     @Override
     public void logEvent(GuildMemberJoinEvent event, boolean isDebug) {
-        if (isDebug) {
+        if (!isDebug) {
             return;
         }
         /*

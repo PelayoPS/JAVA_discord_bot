@@ -1,5 +1,6 @@
 package src.commands.audio;
 
+import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -21,8 +22,9 @@ public class VoiceLeave implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
+        Channel channel = event.getGuild().getAudioManager().getConnectedChannel();
         event.getGuild().getAudioManager().closeAudioConnection();
-        event.reply("Left " + event.getMember().getVoiceState().getChannel()).queue();
+        event.reply("Left " + channel.getName()).queue();
     }
 
     /**

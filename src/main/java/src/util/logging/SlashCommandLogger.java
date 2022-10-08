@@ -14,7 +14,7 @@ public class SlashCommandLogger implements Logger<SlashCommandInteractionEvent> 
      */
     @Override
     public void logEvent(SlashCommandInteractionEvent event, boolean isDebug) {
-        if (isDebug) {
+        if (!isDebug) {
             return;
         }
         /*

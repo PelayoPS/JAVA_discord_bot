@@ -20,6 +20,9 @@ public class UserLeaveLogger implements Logger<GuildMemberRemoveEvent> {
      */
     @Override
     public void logEvent(GuildMemberRemoveEvent event, boolean isDebug) {
+        if (!isDebug) {
+            return;
+        }
         /*
          * Sends a message in the serverleavelog channel when a user leaves a guild.
          * format: [username] left the server.

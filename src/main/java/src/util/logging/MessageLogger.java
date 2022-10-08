@@ -18,7 +18,7 @@ public class MessageLogger implements Logger<MessageReceivedEvent> {
      */
     @Override
     public void logEvent(MessageReceivedEvent event, boolean isDebug) {
-        if (isDebug) {
+        if (!isDebug) {
             return;
         }
         /*
