@@ -13,8 +13,8 @@ public class SlashCommandLogger implements Logger<SlashCommandInteractionEvent> 
      * Logs the slash command to the channel specified in the config file.
      */
     @Override
-    public void logEvent(SlashCommandInteractionEvent event, boolean isDebug) {
-        if (!isDebug) {
+    public void logEvent(SlashCommandInteractionEvent event, boolean isProduction) {
+        if (!isProduction) {
             return;
         }
         /*
@@ -34,7 +34,5 @@ public class SlashCommandLogger implements Logger<SlashCommandInteractionEvent> 
                         .addField("Command", event.getCommandString(), true)
                         .build()
                 ).queue();
-
-
     }
 }

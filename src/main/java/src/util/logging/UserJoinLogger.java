@@ -19,8 +19,8 @@ public class UserJoinLogger implements Logger<GuildMemberJoinEvent>{
      * @param isDebug
      */
     @Override
-    public void logEvent(GuildMemberJoinEvent event, boolean isDebug) {
-        if (!isDebug) {
+    public void logEvent(GuildMemberJoinEvent event, boolean isProduction) {
+        if (!isProduction) {
             return;
         }
         /*

@@ -19,8 +19,8 @@ public class UserLeaveLogger implements Logger<GuildMemberRemoveEvent> {
      * @param isDebug
      */
     @Override
-    public void logEvent(GuildMemberRemoveEvent event, boolean isDebug) {
-        if (!isDebug) {
+    public void logEvent(GuildMemberRemoveEvent event, boolean isProduction) {
+        if (!isProduction) {
             return;
         }
         /*
