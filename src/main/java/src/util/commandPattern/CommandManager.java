@@ -3,6 +3,8 @@ package src.util.commandPattern;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import src.commands.audio.VoiceJoin;
+import src.commands.audio.VoiceLeave;
 import src.commands.general.*;
 import src.commands.mod.*;
 
@@ -69,6 +71,9 @@ public class CommandManager {
         commands.put(Mute.getNameForManagement(), new Mute());
         commands.put(Restart.getNameForManagement(), new Restart());
         commands.put(Warn.getNameForManagement(), new Warn());
+        //audio commands
+        commands.put(VoiceJoin.getNameForManagement(), new VoiceJoin());
+        commands.put(VoiceLeave.getNameForManagement(), new VoiceLeave());
 
     }
 
@@ -100,6 +105,10 @@ public class CommandManager {
         System.out.println("Mod commands loaded: ");
         commands.values().stream()
                 .filter(command -> command.getCategory() == Category.MOD)
+                .forEach(command -> System.out.println("\t" + command.getName()));
+        System.out.println("Audio commands loaded: ");
+        commands.values().stream()
+                .filter(command -> command.getCategory() == Category.AUDIO)
                 .forEach(command -> System.out.println("\t" + command.getName()));
     }
 

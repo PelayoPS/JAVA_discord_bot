@@ -79,6 +79,7 @@ public class Avatar implements CommandInterface {
      * Returns the name of the command for general use
      * @return
      */
+    @Override
     public String getName(){
         return name;
     }
@@ -87,6 +88,7 @@ public class Avatar implements CommandInterface {
      * Returns the category of the command
      * @return
      */
+    @Override
     public Category getCategory(){
         return category;
     }

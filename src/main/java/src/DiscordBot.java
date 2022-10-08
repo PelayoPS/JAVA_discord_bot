@@ -33,12 +33,7 @@ public class DiscordBot {
         if (productionEnabled){
             initialize("TOKENPROD");
         } else {
-            if(config.get("TOKENDEV").equals("")){
-                initialize("TOKENPROD");//so production users dont mess up
-            } else {
-                initialize("TOKENDEV");
-            }
-
+            initialize("TOKENDEV");
         }
     }
 

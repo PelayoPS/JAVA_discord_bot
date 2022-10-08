@@ -20,7 +20,11 @@ public class Invoker extends ListenerAdapter {
      */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
+
         CommandInterface command = commandManager.getCommand(event.getName());
+        if (command == null) {
+            event.reply("Command not found").queue();
+        }
         if(event.getMember().getPermissions().contains(command.getCategory().getPermission())) {
             command.handle(event);
         } else {

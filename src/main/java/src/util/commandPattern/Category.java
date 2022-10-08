@@ -6,6 +6,8 @@ public enum Category {
     GENERAL("General"),
     MOD("Moderation"),
 
+    AUDIO("Audio"),
+
     TESTING("Testing");
     private final String name;
 
@@ -19,12 +21,18 @@ public enum Category {
 
     public Permission getPermission() {
         switch (this) {
-            case MOD:
+            case MOD -> {
                 return Permission.ADMINISTRATOR;
-            case GENERAL:
+            }
+            case GENERAL -> {
                 return Permission.USE_APPLICATION_COMMANDS;
-            default:
-                return null;
+            }
+            case AUDIO -> {
+                return Permission.VOICE_CONNECT;
+            }
+            default -> {
+                return Permission.UNKNOWN;
+            }
         }
     }
 }
