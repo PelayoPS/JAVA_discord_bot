@@ -16,7 +16,7 @@ public class UserLeaveLogger implements Logger<GuildMemberRemoveEvent> {
     /**
      * Logs when a user leaves to the channel specified in the config file.
      * @param event
-     * @param isDebug
+     * @param isProduction
      */
     @Override
     public void logEvent(GuildMemberRemoveEvent event, boolean isProduction) {

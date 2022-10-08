@@ -14,7 +14,7 @@ public class MessageLogger implements Logger<MessageReceivedEvent> {
     /**
      * Logs a message to the channel specified in the config file.
      * @param event
-     * @param isDebug
+     * @param isProduction
      */
     @Override
     public void logEvent(MessageReceivedEvent event, boolean isProduction) {

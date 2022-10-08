@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="JDA_discord_bot">
+  <artifact type="jar" build-on-make="true" name="JDA_discord_bot">
     <output-path>$PROJECT_DIR$/build</output-path>
     <root id="archive" name="JDA_discord_bot.jar">
       <element id="module-output" name="JDA_discord_bot" />

@@ -16,7 +16,7 @@ public class UserJoinLogger implements Logger<GuildMemberJoinEvent>{
     /**
      * Logs when a user joins to the channel specified in the config file.
      * @param event
-     * @param isDebug
+     * @param isProduction
      */
     @Override
     public void logEvent(GuildMemberJoinEvent event, boolean isProduction) {

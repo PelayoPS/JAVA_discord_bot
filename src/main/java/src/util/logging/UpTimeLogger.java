@@ -23,10 +23,10 @@ public class UpTimeLogger implements Logger<ReadyEvent> {
     /**
      * Logs to the console that the bot is ready.
      * @param event
-     * @param isDebug
+     * @param isProduction
      */
     @Override
-    public void logEvent(ReadyEvent event, boolean isDebug) {
+    public void logEvent(ReadyEvent event, boolean isProduction) {
         System.out.println("Bot is ready!");
     }
 
