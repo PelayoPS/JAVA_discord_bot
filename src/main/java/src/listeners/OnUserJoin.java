@@ -23,6 +23,7 @@ public class OnUserJoin extends ListenerAdapter {
         String channelString = DiscordBot.getConfig().get("SERVERJOINCHANNELID");
         event.getGuild().getTextChannelById(channelString)
                 .sendMessageEmbeds(getWelcomeMessage(event)).queue();
+        event.getGuild().getTextChannelById(channelString).sendMessageEmbeds(getWelcomeMessage(event)).queue();
     }
 
     private MessageEmbed getWelcomeMessage(GuildMemberJoinEvent event) {
