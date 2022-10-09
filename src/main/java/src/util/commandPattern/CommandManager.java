@@ -3,8 +3,8 @@ package src.util.commandPattern;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import src.commands.audio.VoiceJoin;
-import src.commands.audio.VoiceLeave;
+import src.commands.audio.*;
+import src.commands.audio.controls.*;
 import src.commands.general.*;
 import src.commands.mod.*;
 
@@ -74,6 +74,14 @@ public class CommandManager {
         //audio commands
         commands.put(VoiceJoin.getNameForManagement(), new VoiceJoin());
         commands.put(VoiceLeave.getNameForManagement(), new VoiceLeave());
+        commands.put(Play.getNameForManagement(), new Play());
+        commands.put(Volume.getNameForManagement(), new Volume());
+        commands.put(Stop.getNameForManagement(), new Stop());
+        commands.put(NowPlaying.getNameForManagement(), new NowPlaying());
+        commands.put(Resume.getNameForManagement(), new Resume());
+        commands.put(Pause.getNameForManagement(), new Pause());
+        commands.put(Rewind.getNameForManagement(), new Rewind());
+        commands.put(Next.getNameForManagement(), new Next());
 
     }
 
