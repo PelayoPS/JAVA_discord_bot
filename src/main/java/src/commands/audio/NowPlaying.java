@@ -10,10 +10,19 @@ import src.util.commandPattern.CommandInterface;
 
 public class NowPlaying implements CommandInterface {
 
+// ====================VARIABLES SECTION====================//
+
     private static String name = "nowplaying";
     private Category category = Category.AUDIO;
+
+    private String description = "Shows the current song";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
     public NowPlaying() {
     }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * returns the info related to the current song
@@ -25,13 +34,15 @@ public class NowPlaying implements CommandInterface {
         event.reply(trackInfo.title+trackInfo.author+" -> "+trackInfo.uri).queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * returns the command data
      * @return
      */
     @Override
     public CommandData getSlash() {
-        return Commands.slash(name, "Shows the current song");
+        return Commands.slash(name, description);
     }
 
     /**
@@ -58,5 +69,14 @@ public class NowPlaying implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * returns the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

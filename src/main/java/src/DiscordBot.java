@@ -6,10 +6,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import src.listeners.OnMessageReceived;
-import src.listeners.OnReady;
-import src.listeners.OnUserJoin;
-import src.listeners.OnUserLeave;
+import src.listeners.ListenerManager;
 import src.util.commandPattern.CommandManager;
 import src.util.commandPattern.Invoker;
 
@@ -64,10 +61,7 @@ public class DiscordBot {
      * @param jda the JDA instance
      */
     private void addListeners(JDA jda) {
-        jda.addEventListener(new OnReady());//adds the OnReady listener
-        jda.addEventListener(new OnMessageReceived(this));//adds the OnMessageReceived listener
-        jda.addEventListener(new OnUserJoin(this));//adds the OnUserJoin listener
-        jda.addEventListener(new OnUserLeave(this));//adds the OnUserLeave listener
+        new ListenerManager(this).getListener().forEach(jda::addEventListener);
     }
 
     /**

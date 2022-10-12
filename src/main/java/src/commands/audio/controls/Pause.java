@@ -9,10 +9,19 @@ import src.util.commandPattern.CommandInterface;
 
 public class Pause implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static String name = "pause";
     private Category category = Category.AUDIO;
+
+    private String description = "Pauses the current song";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
     public Pause() {
     }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * Pauses the current song
@@ -24,13 +33,15 @@ public class Pause implements CommandInterface {
         event.reply("Paused").queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * Returns the slash command
      * @return
      */
     @Override
     public CommandData getSlash() {
-        return Commands.slash(name, "Pauses the current song");
+        return Commands.slash(name, description);
     }
 
     /**
@@ -57,5 +68,14 @@ public class Pause implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * Returns the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

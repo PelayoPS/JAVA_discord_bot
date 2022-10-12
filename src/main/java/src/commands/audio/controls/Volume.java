@@ -11,10 +11,19 @@ import src.util.commandPattern.CommandInterface;
 
 public class Volume implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static String name = "volume";
     private Category category = Category.AUDIO;
+
+    private String description = "Sets the volume of the player (0-100)";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
     public Volume() {
     }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * Sets the volume of the current song
@@ -25,7 +34,6 @@ public class Volume implements CommandInterface {
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
         if (musicManager == null) {
             event.reply("There is no song playing").queue();
-            return;
         } else {
             int volume = event.getOption("volume").getAsInt();
             musicManager.setVolume(volume);
@@ -33,13 +41,15 @@ public class Volume implements CommandInterface {
         }
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * Returns the slash command
      * @return
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, "Set the volume of the song 0-100")
+        CommandData commandData = Commands.slash(name, description)
                 .addOption(OptionType.INTEGER, "volume", "The volume to set", true);
         return commandData;
     }
@@ -68,5 +78,14 @@ public class Volume implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * Returns the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

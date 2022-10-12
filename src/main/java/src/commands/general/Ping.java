@@ -8,9 +8,20 @@ import src.util.commandPattern.CommandInterface;
 
 public class Ping implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static final String name = "ping";
 
     private final Category category = Category.GENERAL;
+
+    private String description = "Returns the bot's ping";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public Ping() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name ping is used this method is called
@@ -22,13 +33,15 @@ public class Ping implements CommandInterface {
         event.reply("Pong! " + event.getJDA().getGatewayPing() + "ms").queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * returns the command data
      * @return
      */
     @Override
     public CommandData getSlash() {
-        return Commands.slash(name, "Returns the ping of the bot");
+        return Commands.slash(name, description);
     }
 
     /**
@@ -55,5 +68,14 @@ public class Ping implements CommandInterface {
     @Override
     public Category getCategory() {
         return category;
+    }
+
+    /**
+     * gets the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

@@ -10,9 +10,19 @@ import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
 public class Avatar implements CommandInterface {
-    private static final String name = "avatar";
 
+    // ====================VARIABLES SECTION====================//
+
+    private static final String name = "avatar";
     private static final Category category = Category.GENERAL;
+    private String description = "Returns the avatar of the given user";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public Avatar() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name avatar is used this method is called
@@ -25,10 +35,10 @@ public class Avatar implements CommandInterface {
     public void handle(SlashCommandInteractionEvent event) {
         try {
             //when the avatar exists
-            event.replyEmbeds(getEmbedWithAvatar(event)).queue(); // reply immediately
+            event.replyEmbeds(getEmbedWithAvatar(event)).queue();
         } catch (IllegalArgumentException e) {
             //when the avatar doesn't exist
-            event.replyEmbeds(getEmbedWithDefaultAvatar(event)).queue(); // reply immediately
+            event.replyEmbeds(getEmbedWithDefaultAvatar(event)).queue();
         }
     }
 
@@ -56,13 +66,15 @@ public class Avatar implements CommandInterface {
         return message;
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * Returns the command data for the command
      * @return
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, "Sends the avatar of the user given")
+        CommandData command = Commands.slash(name, description)
                 .addOption(OptionType.USER, "user", "The user to get the avatar of", true);
         return command;
     }
@@ -91,6 +103,15 @@ public class Avatar implements CommandInterface {
     @Override
     public Category getCategory(){
         return category;
+    }
+
+    /**
+     * Returns the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp(){
+        return description;
     }
 }
 

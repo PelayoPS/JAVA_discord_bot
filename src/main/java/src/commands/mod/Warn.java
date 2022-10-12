@@ -4,6 +4,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.DiscordBot;
@@ -11,11 +12,22 @@ import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
 public class Warn implements CommandInterface {
+
+    // ====================VARIABLES SECTION====================//
     Dotenv config = DiscordBot.getConfig();
 
     private static final String name = "warn";
 
     private final Category category = Category.MOD;
+
+    private String description = "Warns the user given";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public Warn() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name warn is used this method is called
@@ -53,12 +65,16 @@ public class Warn implements CommandInterface {
                         " for " + reason.getAsString()).queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * @return the command data
      */
     @Override
     public CommandData getSlash() {
-        return Commands.slash(name, "Restarts the bot");
+        return Commands.slash(name, description)
+                .addOption(OptionType.USER, "user", "The user to warn", true)
+                .addOption(OptionType.STRING, "reason", "The reason for the warning", true);
     }
 
     /**
@@ -82,5 +98,13 @@ public class Warn implements CommandInterface {
      */
     public static String getNameForManagement(){
         return name;
+    }
+
+    /**
+     * @return the command description
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

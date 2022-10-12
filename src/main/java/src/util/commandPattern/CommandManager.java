@@ -3,9 +3,12 @@ package src.util.commandPattern;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import src.commands.audio.*;
+import src.commands.audio.NowPlaying;
+import src.commands.audio.VoiceJoin;
+import src.commands.audio.VoiceLeave;
 import src.commands.audio.controls.*;
 import src.commands.general.*;
+import src.commands.general.help.Help;
 import src.commands.mod.*;
 
 import java.util.ArrayList;
@@ -121,25 +124,14 @@ public class CommandManager {
     }
 
     /**
-     * returns a list of commands in the general category
+     * Returns a list of commands for the given category
+     * @param category
      * @return
      */
-    public List<String> getGeneralCommands() {
+    public List<String> getCommands(Category category) {
         List<String> commandList = new ArrayList<>();
         commands.values().stream()
-                .filter(command -> command.getCategory() == Category.GENERAL)
-                .forEach(command -> commandList.add(command.getName()));
-        return commandList;
-    }
-
-    /**
-     * returns a list of commands in the mod category
-     * @return
-     */
-    public List<String> getModCommands() {
-        List<String> commandList = new ArrayList<>();
-        commands.values().stream()
-                .filter(command -> command.getCategory() == Category.MOD)
+                .filter(command -> command.getCategory() == category)
                 .forEach(command -> commandList.add(command.getName()));
         return commandList;
     }

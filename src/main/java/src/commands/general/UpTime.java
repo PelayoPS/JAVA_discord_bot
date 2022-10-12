@@ -9,9 +9,20 @@ import src.util.logging.UpTimeLogger;
 
 public class UpTime implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static final String name = "uptime";
 
     private final Category category = Category.GENERAL;
+
+    private String description = "Returns the bot's uptime";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public UpTime() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name uptime is used this method is called
@@ -23,13 +34,15 @@ public class UpTime implements CommandInterface {
         event.reply(UpTimeLogger.upTime()).queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * returns the command data
      * @return
      */
     @Override
     public CommandData getSlash() {
-        return Commands.slash(name, "Get the uptime of the bot");
+        return Commands.slash(name, description);
     }
 
     /**
@@ -56,5 +69,14 @@ public class UpTime implements CommandInterface {
      */
     public static String getNameForManagement(){
         return name;
+    }
+
+    /**
+     * gets the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

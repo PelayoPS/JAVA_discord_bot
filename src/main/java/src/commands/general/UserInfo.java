@@ -10,11 +10,24 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.time.OffsetDateTime;
+
 public class UserInfo implements CommandInterface {
+
+    // ====================VARIABLES SECTION====================//
 
     private static final String name = "userinfo";
 
     private final Category category = Category.GENERAL;
+
+    private String description = "Returns information about a user";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public UserInfo() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name userinfo is used this method is called
@@ -24,8 +37,12 @@ public class UserInfo implements CommandInterface {
     @Override
     public void handle(SlashCommandInteractionEvent event) {
         String status = getStatus(event.getOption("user"));
-        String creationDate = event.getOption("user").getAsUser().getTimeCreated().toString();
-        String joinDate = event.getOption("user").getAsMember().getTimeJoined().toString();
+        OffsetDateTime creationDate = event.getOption("user").getAsUser().getTimeCreated();
+        //formats the creation date
+        String creationDateS = creationDate.getYear() + "-" + creationDate.getMonthValue() + "-" + creationDate.getDayOfMonth();
+        OffsetDateTime joinDate = event.getOption("user").getAsMember().getTimeJoined();
+        //formats the join date
+        String joinDateS = joinDate.getYear() + "-" + joinDate.getMonthValue() + "-" + joinDate.getDayOfMonth();
         String name = event.getOption("user").getAsUser().getName();
         String id = event.getOption("user").getAsUser().getId();
         String avatar = getAvatar(event);
@@ -33,8 +50,8 @@ public class UserInfo implements CommandInterface {
                 .setThumbnail(avatar)
                 .setTitle("User info for " + name)
                 .addField("Status", status, true)
-                .addField("Creation date", creationDate, true)
-                .addField("Join date", joinDate, true)
+                .addField("Creation date", creationDateS, true)
+                .addField("Join date", joinDateS, true)
                 .addField("Name", name, true)
                 .addField("ID", id, true)
                 .build();
@@ -87,13 +104,15 @@ public class UserInfo implements CommandInterface {
         return status;
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * returns the command data
      * @return
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash("userinfo", "Returns a full info of the user given")
+        CommandData command = Commands.slash(name, description)
                 .addOption(OptionType.USER, "user", "User to get the info", true);
         return command;
     }
@@ -122,6 +141,15 @@ public class UserInfo implements CommandInterface {
     @Override
     public Category getCategory() {
         return category;
+    }
+
+    /**
+     * gets the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }
 

@@ -14,13 +14,22 @@ import java.net.URISyntaxException;
 
 public class Play implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static String name = "play";
     private Category category = Category.AUDIO;
+
+    private String description = "Link to play";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
     public Play() {
     }
 
+    // ====================HANDLING SECTION====================//
+
     /**
-     * When the command is excuted it plays a link from a song or playlist from youtube
+     * When the command is executed it plays a link from a song or playlist from youtube
      *
      * @param event The event
      */
@@ -35,13 +44,49 @@ public class Play implements CommandInterface {
         }
     }
 
+    // ====================UTIL SECTION====================//
+
+    /**
+     * Plays a song
+     * if the link is from a song it adds ytsearch: to the link
+     * @param event The event
+     * @param channel The channel
+     */
+    private void play(SlashCommandInteractionEvent event, TextChannel channel) {
+        String link = event.getOption("link").getAsString();
+        if (link.contains("list")){
+            //link doesn't need to be modified
+        } else {
+            if (!isUrl(link)) {
+                link = "ytsearch:" + link;
+            }
+        }
+        PlayerManager.getInstance().loadAndPlay(channel, link, event);
+    }
+
+    /**
+     * Checks if the link is a valid url
+     * @param url The url
+     * @return true if it is a valid url
+     */
+    private boolean isUrl(String url) {
+        try {
+            new URI(url);
+            return true;
+        } catch (URISyntaxException e) {
+            return false;
+        }
+    }
+
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * returns the slash command data
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, "Plays a song")
-                .addOption(OptionType.STRING, "link", "Link to play", true);
+        CommandData commandData = Commands.slash(name, description)
+                .addOption(OptionType.STRING, "link", description, true);
         return commandData;
     }
 
@@ -69,35 +114,10 @@ public class Play implements CommandInterface {
     }
 
     /**
-     * Plays a song
-     * if the link is from a song it adds ytsearch: to the link
-     * @param event The event
-     * @param channel The channel
+     * returns the description of the command
      */
-    private void play(SlashCommandInteractionEvent event, TextChannel channel) {
-        String link = event.getOption("link").getAsString();
-        if (link.contains("list")){
-            //link doesnt need to be modified
-        } else {
-            if (!isUrl(link)) {
-                link = "ytsearch:" + link;
-            }
-        }
-        PlayerManager.getInstance().loadAndPlay(channel, link, event);
+    @Override
+    public String getHelp() {
+        return description;
     }
-
-    /**
-     * Checks if the link is a valid url
-     * @param url The url
-     * @return true if it is a valid url
-     */
-    private boolean isUrl(String url) {
-        try {
-            new URI(url);
-            return true;
-        } catch (URISyntaxException e) {
-            return false;
-        }
-    }
-
 }

@@ -12,4 +12,6 @@ public interface CommandInterface {
 
     Category getCategory();
 
+    String getHelp();
+
 }

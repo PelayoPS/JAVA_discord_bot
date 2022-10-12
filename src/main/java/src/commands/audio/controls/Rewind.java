@@ -9,10 +9,19 @@ import src.util.commandPattern.CommandInterface;
 
 public class Rewind implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static String name = "rewind";
     private Category category = Category.AUDIO;
+
+    private String description = "Rewinds the current song";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
     public Rewind() {
     }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * Replays the current song
@@ -24,13 +33,15 @@ public class Rewind implements CommandInterface {
                     .playTrack(PlayerManager.getInstance().getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack().makeClone());
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * Returns the slash command
      * @return
      */
     @Override
     public CommandData getSlash() {
-        return Commands.slash(name, "Rewinds the current song");
+        return Commands.slash(name, description);
     }
 
     /**
@@ -57,5 +68,14 @@ public class Rewind implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * Returns the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

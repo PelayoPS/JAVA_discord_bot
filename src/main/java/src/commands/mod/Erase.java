@@ -10,14 +10,24 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Erase implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static final String name = "erase";
 
     private final Category category = Category.MOD;
+
+    private String description = "Erases the given amount of messages in the channel provided";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public Erase() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name erase is used this method is called
@@ -53,10 +63,12 @@ public class Erase implements CommandInterface {
      * @return
      */
     private List<Message> getMessagesToDelete(int amountToDelete, TextChannel channel){
-        List<Message> messagesToDelete = new ArrayList<Message>();
+        List<Message> messagesToDelete;
         messagesToDelete = channel.getHistory().retrievePast(amountToDelete).complete();
         return messagesToDelete;
     }
+
+    // ====================RETURN INFO SECTION====================//
 
     /**
      * returns the command data
@@ -64,7 +76,7 @@ public class Erase implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, "Deletes the amount of messages given in the channel provided")
+        CommandData command = Commands.slash(name, description)
                 .addOption(OptionType.INTEGER, "amount", "The amount of messages to delete", true)
                 .addOption(OptionType.CHANNEL, "channel", "The channel to delete the messages from", true);
         return command;
@@ -94,5 +106,14 @@ public class Erase implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * gets the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

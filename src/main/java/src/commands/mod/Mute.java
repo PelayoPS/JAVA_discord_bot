@@ -17,11 +17,22 @@ import java.util.List;
 
 public class Mute implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static final String name = "mute";
 
     private final Category category = Category.MOD;
 
+    private String description = "Mutes the user given";
+
     Dotenv config = DiscordBot.getConfig();
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public Mute() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name mute is used this method is called
@@ -94,12 +105,14 @@ public class Mute implements CommandInterface {
         event.reply("Muted " + user.getAsUser().getAsTag() + " for " + time.getAsLong() + " seconds").queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * @return the name of the command
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, "Mutes the user given")
+        CommandData command = Commands.slash(name, description)
                 .addOption(OptionType.USER, "user", "The user to mute", true)
                 .addOption(OptionType.STRING, "reason", "The reason for the mute", true)
                 .addOption(OptionType.INTEGER, "time", "The time to mute the user for", true);
@@ -127,5 +140,13 @@ public class Mute implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * @return the description of the command
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

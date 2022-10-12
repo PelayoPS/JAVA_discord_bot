@@ -6,9 +6,7 @@ public enum Category {
     GENERAL("General"),
     MOD("Moderation"),
 
-    AUDIO("Audio"),
-
-    TESTING("Testing");
+    AUDIO("Audio");
     private final String name;
 
     Category(String name) {

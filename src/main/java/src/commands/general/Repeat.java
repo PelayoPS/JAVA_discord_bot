@@ -9,9 +9,20 @@ import src.util.commandPattern.CommandInterface;
 
 public class Repeat implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static final String name = "repeat";
 
     private final Category category = Category.GENERAL;
+
+    private String description = "Repeats the text you give it in the channel you use say";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public Repeat() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name repeat is used this method is called
@@ -20,8 +31,10 @@ public class Repeat implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        event.reply(event.getOption("content").getAsString()).queue(); // reply immediately
+        event.getOption("channel").getAsChannel().asTextChannel().sendMessage(event.getOption("content").getAsString()).queue();
     }
+
+    // ====================RETURN INFO SECTION====================//
 
     /**
      * returns the command data
@@ -30,7 +43,8 @@ public class Repeat implements CommandInterface {
     @Override
     public CommandData getSlash() {
         CommandData command = Commands.slash(name, "Repeats the content given")
-                .addOption(OptionType.STRING, "content", "The content to repeat", true);
+                .addOption(OptionType.STRING, "content", "The content to repeat", true)
+                .addOption(OptionType.CHANNEL, "channel", "The channel to send the message to", true);
         return command;
     }
 
@@ -58,5 +72,14 @@ public class Repeat implements CommandInterface {
     @Override
     public Category getCategory() {
         return category;
+    }
+
+    /**
+     * gets the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

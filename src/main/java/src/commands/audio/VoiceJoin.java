@@ -8,11 +8,19 @@ import src.util.commandPattern.CommandInterface;
 
 public class VoiceJoin implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static String name = "voicejoin";
     private Category category = Category.AUDIO;
 
+    private String description = "Joins the voice channel where the user is in";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
     public VoiceJoin() {
     }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name join is used this method is called
@@ -29,13 +37,15 @@ public class VoiceJoin implements CommandInterface {
         }
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * Returns the command data for the command
      * @return
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, "Joins the voice channel you are in.");
+        CommandData commandData = Commands.slash(name, description);
         return commandData;
     }
 
@@ -63,5 +73,13 @@ public class VoiceJoin implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * Returns the description of the command
+     * @return
+     */
+    public String getHelp() {
+        return description;
     }
 }

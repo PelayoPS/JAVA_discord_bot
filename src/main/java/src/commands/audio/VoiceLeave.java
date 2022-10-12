@@ -9,11 +9,19 @@ import src.util.commandPattern.CommandInterface;
 
 public class VoiceLeave implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static String name = "voiceleave";
     private Category category = Category.AUDIO;
 
+    private String description = "Leaves the voice channel";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
     public VoiceLeave() {
     }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name leave is used this method is called
@@ -27,13 +35,15 @@ public class VoiceLeave implements CommandInterface {
         event.reply("Left " + channel.getName()).queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * Returns the command data for the command
      * @return
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash("voiceleave", "Leaves the voice channel you are in.");
+        CommandData commandData = Commands.slash(name, description);
         return commandData;
     }
 
@@ -61,5 +71,14 @@ public class VoiceLeave implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * Returns the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

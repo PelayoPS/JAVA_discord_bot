@@ -15,9 +15,20 @@ import java.util.stream.Collectors;
 
 public class StreamOnline implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static final String name = "streamonline";
 
     private final Category category = Category.GENERAL;
+
+    private String description = "Returns the streamers that are online";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public StreamOnline() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name streamonline is used this method is called
@@ -41,13 +52,15 @@ public class StreamOnline implements CommandInterface {
         event.replyEmbeds(messageEmbed).queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * returns the command data
      * @return
      */
     @Override
     public CommandData getSlash() {
-        return Commands.slash(name, "Returns a list of streamers that are online");
+        return Commands.slash(name, description);
     }
 
     /**
@@ -74,5 +87,14 @@ public class StreamOnline implements CommandInterface {
     @Override
     public Category getCategory() {
         return category;
+    }
+
+    /**
+     * gets the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp(){
+        return description;
     }
 }

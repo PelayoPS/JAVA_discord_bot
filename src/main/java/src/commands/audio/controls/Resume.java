@@ -9,10 +9,19 @@ import src.util.commandPattern.CommandInterface;
 
 public class Resume implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static String name = "resume";
     private Category category = Category.AUDIO;
+
+    private String description = "Resumes the current song";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
     public Resume() {
     }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * Resumes the current song
@@ -24,13 +33,15 @@ public class Resume implements CommandInterface {
         event.reply("Resumed").queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * Returns the slash command
      * @return
      */
     @Override
     public CommandData getSlash() {
-        return Commands.slash(name, "Resumes the current song");
+        return Commands.slash(name, description);
     }
 
     /**
@@ -57,5 +68,14 @@ public class Resume implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * Returns the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }

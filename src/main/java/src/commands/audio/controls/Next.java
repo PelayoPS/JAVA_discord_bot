@@ -11,10 +11,18 @@ import src.util.commandPattern.CommandInterface;
 
 public class Next implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static String name = "next";
     private Category category = Category.AUDIO;
+    private String description = "Skips the current song";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
     public Next() {
     }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * when the slash command is called it skips the current song
@@ -30,13 +38,15 @@ public class Next implements CommandInterface {
         event.reply(trackInfo.title+trackInfo.author+" -> "+trackInfo.uri).queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * returns the slash command
      * @return
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, "Skips the current song")
+        CommandData commandData = Commands.slash(name, description)
                 .addOption(OptionType.INTEGER, "amount", "The amount of songs to skip", true);
         return commandData;
     }
@@ -66,4 +76,14 @@ public class Next implements CommandInterface {
     public static String getNameForManagement() {
         return name;
     }
+
+    /**
+     * returns the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
+    }
+
 }

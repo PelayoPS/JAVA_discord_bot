@@ -11,9 +11,20 @@ import src.util.commandPattern.CommandInterface;
 
 public class Kick implements CommandInterface {
 
+    // ====================VARIABLES SECTION====================//
+
     private static final String name = "kick";
 
     private final Category category = Category.MOD;
+
+    private String description = "Kicks the user given";
+
+    // ====================CONSTRUCTOR SECTION====================//
+
+    public Kick() {
+    }
+
+    // ====================HANDLING SECTION====================//
 
     /**
      * When a slash command with the name kick is used this method is called
@@ -30,13 +41,15 @@ public class Kick implements CommandInterface {
         event.getGuild().kick(user).queue();
     }
 
+    // ====================RETURN INFO SECTION====================//
+
     /**
      * returns the command data
      * @return
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, "Kicks the user given")
+        CommandData command = Commands.slash(name, description)
                 .addOption(OptionType.USER, "user", "The user to kick", true);
         return command;
     }
@@ -65,5 +78,14 @@ public class Kick implements CommandInterface {
      */
     public static String getNameForManagement() {
         return name;
+    }
+
+    /**
+     * gets the description of the command
+     * @return
+     */
+    @Override
+    public String getHelp() {
+        return description;
     }
 }
