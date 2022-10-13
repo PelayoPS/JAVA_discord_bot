@@ -7,6 +7,7 @@ import src.commands.audio.NowPlaying;
 import src.commands.audio.VoiceJoin;
 import src.commands.audio.VoiceLeave;
 import src.commands.audio.controls.*;
+import src.commands.games.tictactoe.TicTacToe;
 import src.commands.general.*;
 import src.commands.general.help.Help;
 import src.commands.mod.*;
@@ -85,6 +86,8 @@ public class CommandManager {
         commands.put(Pause.getNameForManagement(), new Pause());
         commands.put(Rewind.getNameForManagement(), new Rewind());
         commands.put(Next.getNameForManagement(), new Next());
+        //game commands
+        commands.put(TicTacToe.getNameForManagement(), new TicTacToe());
 
     }
 

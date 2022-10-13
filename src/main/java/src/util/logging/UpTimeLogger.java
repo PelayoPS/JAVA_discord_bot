@@ -2,7 +2,6 @@ package src.util.logging;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.ReadyEvent;
-import src.DiscordBot;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,9 +10,6 @@ public class UpTimeLogger implements Logger<ReadyEvent> {
     private static long startTime = 0;
     private final JDA bot;
 
-    private final String uptimeChannelID = DiscordBot.getConfig().get("UPTIMECHANNELID");
-    private final String serverID = DiscordBot.getConfig().get("SERVERID");
-    private final String messageID = DiscordBot.getConfig().get("UPTIMEMESSAGEID");
 
     public UpTimeLogger(JDA bot) {
         startTime = System.currentTimeMillis();

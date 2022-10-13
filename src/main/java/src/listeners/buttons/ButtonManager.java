@@ -1,5 +1,6 @@
 package src.listeners.buttons;
 
+import src.commands.games.tictactoe.BoardButtonListener;
 import src.commands.general.help.HelpButtonListener;
 
 import java.util.ArrayList;
@@ -16,7 +17,8 @@ public class ButtonManager {
     public void registerButtonListener() {
         //Help menu buttons
         buttonListeners.add(new HelpButtonListener());
-
+        //TicTacToe buttons
+        buttonListeners.add(new BoardButtonListener());
     }
 
     public List<ButtonListener> getButtonListeners() {

@@ -22,6 +22,7 @@ public class Main {
             //if no exception was raised we can continue
             initializeBot(args);
         } catch (Exception e) {//only runs the gui setup if the .env is not found
+            e.printStackTrace();
             initializeGui();
             //after creating the .env with the gui setup we can continue
             initializeBot(args);

@@ -6,7 +6,9 @@ public enum Category {
     GENERAL("General"),
     MOD("Moderation"),
 
-    AUDIO("Audio");
+    AUDIO("Audio"),
+
+    GAME("Game");
     private final String name;
 
     Category(String name) {
@@ -22,7 +24,7 @@ public enum Category {
             case MOD -> {
                 return Permission.ADMINISTRATOR;
             }
-            case GENERAL -> {
+            case GENERAL, GAME -> {
                 return Permission.USE_APPLICATION_COMMANDS;
             }
             case AUDIO -> {
