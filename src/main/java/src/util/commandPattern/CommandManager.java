@@ -88,7 +88,6 @@ public class CommandManager {
         commands.put(Next.getNameForManagement(), new Next());
         //game commands
         commands.put(TicTacToe.getNameForManagement(), new TicTacToe());
-
     }
 
     /**
