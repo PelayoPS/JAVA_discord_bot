@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import src.DiscordBot;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
@@ -36,7 +37,7 @@ public class StreamOnline implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        List<Member> members = event.getJDA().getGuilds().get(0).getMembers();
+        List<Member> members = event.getJDA().getGuildById(DiscordBot.getConfig().get("SERVERID")).getMembers();
         List<String> streamLinks = new ArrayList<>();
         members.stream().filter(member ->
             !member.getUser().isBot() && member.getRoles().contains(event.getGuild().getRolesByName("Streamer", true).get(0)))//user is streamer

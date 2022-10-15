@@ -52,7 +52,6 @@ public class DiscordBot {
                 .enableCache(EnumSet.allOf(CacheFlag.class))//enables all the caches
                 .build();//builds the JDA instance
         this.commandManager = new CommandManager(jda);
-        jda.getGuilds().get(0).loadMembers();
         updateCommands();//updates the commands
         addCommandListeners();//adds the command listeners
         //console log name of commands loaded
