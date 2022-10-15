@@ -2,7 +2,6 @@ package src.commands.mod;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.Main;
@@ -70,9 +69,7 @@ public class Restart implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, description)
-                .addOption(OptionType.USER, "user", "The user to warn", true)
-                .addOption(OptionType.STRING, "reason", "The reason to warn the user for", true);
+        CommandData command = Commands.slash(name, description);
         return command;
     }
 
