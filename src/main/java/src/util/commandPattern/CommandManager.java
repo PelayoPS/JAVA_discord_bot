@@ -123,6 +123,10 @@ public class CommandManager {
         commands.values().stream()
                 .filter(command -> command.getCategory() == Category.AUDIO)
                 .forEach(command -> System.out.println("\t" + command.getName()));
+        System.out.println("Game commands loaded: ");
+        commands.values().stream()
+                .filter(command -> command.getCategory() == Category.GAME)
+                .forEach(command -> System.out.println("\t" + command.getName()));
     }
 
     /**
