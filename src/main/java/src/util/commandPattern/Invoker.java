@@ -20,7 +20,6 @@ public class Invoker extends ListenerAdapter {
      */
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
-
         CommandInterface command = commandManager.getCommand(event.getName());
         if (command == null) {
             event.reply("Command not found").queue();

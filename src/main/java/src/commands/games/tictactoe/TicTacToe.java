@@ -15,7 +15,7 @@ public class TicTacToe implements CommandInterface {
 
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        new Board(event).drawBoard().queue();
+        new Board(event).drawBoard();
     }
 
     @Override

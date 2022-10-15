@@ -13,7 +13,6 @@ public class OnReady extends ListenerAdapter {
     @Override
     public void onReady(ReadyEvent event) {
         new UpTimeLogger(event.getJDA()).logEvent(event, DiscordBot.isProductionEnabled());
-
     }
 
 }

@@ -13,6 +13,8 @@ public class BoardButtonListener extends ButtonListener {
 
     @Override
     public void onButtonInteraction(ButtonInteractionEvent event) {
-        this.buttonGameManager.runTurn(event);
+        if (event.getInteraction().getMessage().getEmbeds().get(0).getColor().equals(Board.boardColor)) {
+            this.buttonGameManager.runTurn(event);
+        }
     }
 }

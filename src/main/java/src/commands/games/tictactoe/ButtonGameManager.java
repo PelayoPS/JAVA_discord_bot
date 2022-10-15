@@ -1,64 +1,54 @@
 package src.commands.games.tictactoe;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
-import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
 
 public class ButtonGameManager {
 
     private SlashCommandInteractionEvent slashEvent;
+    private ButtonStyle player1Style = ButtonStyle.SUCCESS;
+    private ButtonStyle player2Style = ButtonStyle.DANGER;
 
     public ButtonGameManager() {
          this.slashEvent = Board.getEvent();
     }
 
     public void runTurn(ButtonInteractionEvent event) {
-        if (event.getUser().getId().equals(slashEvent.getUser().getId())) {
-            //gets the original message and edits it
-            //with the new button style
-            ReplyCallbackAction replyCallbackAction = new Board(slashEvent).drawBoard();
-            MessageEmbed embed = replyCallbackAction.getEmbeds().get(0);
-            replyCallbackAction = event.replyEmbeds(embed);
-            replyCallbackAction = addButtons(replyCallbackAction, event);
+        MessageEmbed messageEmbed = new EmbedBuilder()
+                .setTitle("TicTacToe")
+                .setDescription(
+                        "Your game vs" + event.getGuild().getMemberByTag(Board.board.getPlayer2()) +"has just started\n"
+                                + "To make a move, click the corresponding button\n"
+                )
+                .setColor(Board.boardColor)
+                .build();
+        String buttonID = event.getButton().getId();
+        Button[][] board = addButtons(buttonID, event);
+        board = Board.boardButtons;
+        String[] buttonIDSplit = buttonID.split(",");
+        //edits the embed with 3 rows of buttons
+        event.editMessageEmbeds(messageEmbed).setComponents(
+                ActionRow.of(board[0]),
+                ActionRow.of(board[1]),
+                ActionRow.of(board[2])
+        ).queue();
 
-        }
     }
 
-    private ReplyCallbackAction addButtons(ReplyCallbackAction replyCallbackAction, ButtonInteractionEvent event) {
-        Button[][] board = new Button[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = Button.of(ButtonStyle.PRIMARY, i+"", i+"");
-            }
-        }
-        ButtonStyle buttonStyle = ButtonStyle.PRIMARY;
-        if (event.getUser().getId().equals(slashEvent.getUser().getId())) {
-            buttonStyle = ButtonStyle.SUCCESS;
-        }
-        if (event.getUser().getId().equals(slashEvent.getOption("opponent").getAsUser().getId())) {
-            buttonStyle = ButtonStyle.DANGER;
-        }
-        board[Integer.parseInt(event.getComponentId())][Integer.parseInt(event.getComponentId())] =
-                Button.of(buttonStyle, event.getComponentId(), event.getComponentId());
-        replyCallbackAction
-                .addActionRow(
-                        board[0][0],
-                        board[0][1],
-                        board[0][2]
-                )
-                .addActionRow(
-                        board[1][0],
-                        board[1][1],
-                        board[1][2]
-                )
-                .addActionRow(
-                        board[2][0],
-                        board[2][1],
-                        board[2][2]
-                );
-        return replyCallbackAction;
+    private Button[][] addButtons(String buttonID, ButtonInteractionEvent event) {
+        String[] buttonIDSplit = buttonID.split(",");
+        Board.boardButtons[Integer.parseInt(buttonIDSplit[0])][Integer.parseInt(buttonIDSplit[1])] = Button.of(
+                event.getUser().getAsTag().equals(Board.board.getPlayer1()) ? player1Style : player2Style,
+                buttonID,
+                //green checkmark emoji
+                event.getUser().getAsTag().equals(Board.board.getPlayer1()) ? "\u2705" : "\u274C"
+        );
+        Button[][] board = Board.boardButtons;
+        return board;
     }
 }

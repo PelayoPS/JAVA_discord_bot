@@ -11,12 +11,16 @@ import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 import src.util.commandPattern.CommandManager;
 
+import java.awt.*;
+import java.util.List;
 import java.util.*;
 
 public class HelpMenuCreator {
     
     private static CommandManager commandManager;
     private Map<Category, String> commands = new HashMap<>();
+
+    public static final Color helpColor = Color.BLUE;
 
     /**
      * creates a help menu
@@ -37,8 +41,9 @@ public class HelpMenuCreator {
      */
     public MessageEmbed getHelpEmbed() {
         EmbedBuilder messageEmbedBuilder = new EmbedBuilder()
-                .setTitle("Help")
-                .setDescription("Select the category you want to see");
+                .setAuthor("Help")
+                .setDescription("To use this menu click on the buttons below to select a category")
+                .setColor(helpColor);
         return messageEmbedBuilder.build();
     }
 

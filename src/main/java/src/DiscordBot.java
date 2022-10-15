@@ -6,11 +6,14 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import src.listeners.ListenerManager;
 import src.util.commandPattern.CommandManager;
 import src.util.commandPattern.Invoker;
 
 import javax.security.auth.login.LoginException;
+import java.util.EnumSet;
 
 public class DiscordBot {
 
@@ -44,10 +47,12 @@ public class DiscordBot {
         jda = JDABuilder.createDefault(config.get(token))//creates a new JDA instance
                 .setActivity(Activity.playing("with the code"))//sets the activity
                 .setStatus(OnlineStatus.ONLINE)//sets the status
-                .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))//for huge bots enable only the intents you need
-                .enableIntents(GatewayIntent.GUILD_PRESENCES)//enables the presence intent
+                .enableIntents(EnumSet.allOf(GatewayIntent.class))//for huge bots enable only the intents you need
+                .setMemberCachePolicy(MemberCachePolicy.ALL)//enables the member cache
+                .enableCache(EnumSet.allOf(CacheFlag.class))//enables all the caches
                 .build();//builds the JDA instance
         this.commandManager = new CommandManager(jda);
+        jda.getGuilds().get(0).loadMembers();
         updateCommands();//updates the commands
         addCommandListeners();//adds the command listeners
         //console log name of commands loaded

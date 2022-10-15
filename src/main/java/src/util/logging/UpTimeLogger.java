@@ -23,7 +23,7 @@ public class UpTimeLogger implements Logger<ReadyEvent> {
      */
     @Override
     public void logEvent(ReadyEvent event, boolean isProduction) {
-        System.out.println("Bot is ready!");
+        System.out.println("Bot is ready!" + (isProduction ? " (Production mode)" : " (Development mode)"));
     }
 
     /**

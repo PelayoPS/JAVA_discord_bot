@@ -1,7 +1,6 @@
 package src.commands.general;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -10,8 +9,8 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StreamOnline implements CommandInterface {
 
@@ -37,19 +36,24 @@ public class StreamOnline implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        /*
-         * if a user with the role Streamer is streaming it will send a message with their name and link
-         */
-        List<Member> streaming = event.getGuild()
-                .getMembersWithRoles(event.getGuild().getRolesByName("Streamer", true).get(0))//gets the members with the role Streamer
-                .stream()//converts the list to a stream
-                .filter(member -> member.getActivities().stream()//filters the stream to only include members who are streaming
-                        .anyMatch(activity -> activity.getType() == Activity.ActivityType.STREAMING)).collect(Collectors.toList());//collects the stream to a list
-        MessageEmbed messageEmbed = new EmbedBuilder()
-                .setTitle("Streamers")
-                .setDescription(streaming.stream().map(member -> member.getEffectiveName() + " - " + member.getActivities().get(0).getUrl()).collect(Collectors.joining("\n")))
+        List<Member> members = event.getJDA().getGuilds().get(0).getMembers();
+        List<String> streamLinks = new ArrayList<>();
+        members.stream().filter(member ->
+            !member.getUser().isBot() && member.getRoles().contains(event.getGuild().getRolesByName("Streamer", true).get(0)))//user is streamer
+                .forEach(member -> {
+                    member.getActivities().stream().filter(activity -> activity.getType().equals(net.dv8tion.jda.api.entities.Activity.ActivityType.STREAMING))//user is streaming
+                            .forEach(activity -> {
+                                        streamLinks.add(member.getEffectiveName() + " is streaming " + activity.getName() + " at " + activity.getUrl());//get link
+                                    }
+                            );
+                }
+        );
+        String temp = !streamLinks.isEmpty() ? String.join("\n", streamLinks) : "No streamers are online";
+        MessageEmbed embed = new EmbedBuilder()
+                .setTitle("Streamers Online")
+                .setDescription(temp)
                 .build();
-        event.replyEmbeds(messageEmbed).queue();
+        event.replyEmbeds(embed).queue();
     }
 
     // ====================RETURN INFO SECTION====================//
