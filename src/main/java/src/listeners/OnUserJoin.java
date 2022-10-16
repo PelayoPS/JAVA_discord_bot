@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import src.DiscordBot;
+import src.listeners.serverStats.MemberStats;
 import src.util.logging.UserJoinLogger;
 
 public class OnUserJoin extends ListenerAdapter {
@@ -23,6 +24,7 @@ public class OnUserJoin extends ListenerAdapter {
         String channelString = DiscordBot.getConfig().get("WELCOMECHANNELID");
         event.getGuild().getTextChannelById(channelString)
                 .sendMessageEmbeds(getWelcomeMessage(event)).queue();
+        MemberStats.updateStats(event.getGuild());
     }
 
     private MessageEmbed getWelcomeMessage(GuildMemberJoinEvent event) {

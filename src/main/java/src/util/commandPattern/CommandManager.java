@@ -75,6 +75,7 @@ public class CommandManager {
         commands.put(Mute.getNameForManagement(), new Mute());
         commands.put(Restart.getNameForManagement(), new Restart());
         commands.put(Warn.getNameForManagement(), new Warn());
+        commands.put(ReloadStats.getNameForManagement(), new ReloadStats());
         //audio commands
         commands.put(VoiceJoin.getNameForManagement(), new VoiceJoin());
         commands.put(VoiceLeave.getNameForManagement(), new VoiceLeave());
