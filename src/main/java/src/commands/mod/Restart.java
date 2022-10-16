@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import src.DiscordBot;
 import src.Main;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
@@ -57,7 +58,7 @@ public class Restart implements CommandInterface {
         }
         finally
         {
-            Main.main(new String[0]);
+            Main.main(DiscordBot.isProductionEnabled()? new String[]{"prod"} : new String[]{"dev"});
         }
     }
 

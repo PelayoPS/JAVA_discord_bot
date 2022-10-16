@@ -1,7 +1,7 @@
 package src.util.logging;
 
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
 
 import java.util.concurrent.TimeUnit;
 
