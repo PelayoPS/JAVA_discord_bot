@@ -14,7 +14,7 @@ public class Ping implements CommandInterface {
 
     private final Category category = Category.GENERAL;
 
-    private String description = "Returns the bot's ping";
+    private final String description = "Returns the bot's ping";
 
     // ====================CONSTRUCTOR SECTION====================//
 

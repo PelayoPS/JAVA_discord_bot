@@ -12,7 +12,6 @@ import src.listeners.ListenerManager;
 import src.util.commandPattern.CommandManager;
 import src.util.commandPattern.Invoker;
 
-import javax.security.auth.login.LoginException;
 import java.util.EnumSet;
 
 public class DiscordBot {
@@ -26,9 +25,9 @@ public class DiscordBot {
 
     /**
      * Default constructor for the DiscordBot class
-     * @throws LoginException if the bot token is invalid
      */
-    public DiscordBot(boolean productionEnabled) throws LoginException {
+    @SuppressWarnings("SpellCheckingInspection")
+    public DiscordBot(boolean productionEnabled) {
         isProductionEnabled = productionEnabled;
         if (productionEnabled){
             initialize("TOKENPROD");
@@ -40,9 +39,8 @@ public class DiscordBot {
     /**
      * Initializes the bot
      * @param token the name of the token in the .env file
-     * @throws LoginException if the bot token is invalid
      */
-    private void initialize(String token) throws LoginException {
+    private void initialize(String token) {
         config = Dotenv.load();//Used to load all the environment variables from the .env file
         jda = JDABuilder.createDefault(config.get(token))//creates a new JDA instance
                 .setActivity(Activity.playing("with the code"))//sets the activity
@@ -108,8 +106,7 @@ public class DiscordBot {
     }
 
     /**
-     * returns true when the bot is in production mode
-     * @return
+     * @return true when the bot is in production mode
      */
     public static boolean isProductionEnabled(){
         return isProductionEnabled;

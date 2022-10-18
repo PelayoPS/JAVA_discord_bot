@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Repeat implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
@@ -15,7 +17,7 @@ public class Repeat implements CommandInterface {
 
     private final Category category = Category.GENERAL;
 
-    private String description = "Repeats the text you give it in the channel you use say";
+    private final String description = "Repeats the text you give it in the channel you use say";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -31,7 +33,7 @@ public class Repeat implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        event.getOption("channel").getAsChannel().asTextChannel().sendMessage(event.getOption("content").getAsString()).queue();
+        Objects.requireNonNull(event.getOption("channel")).getAsChannel().asTextChannel().sendMessage(Objects.requireNonNull(event.getOption("content")).getAsString()).queue();
     }
 
     // ====================RETURN INFO SECTION====================//
@@ -42,10 +44,9 @@ public class Repeat implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, "Repeats the content given")
+        return Commands.slash(name, description)
                 .addOption(OptionType.STRING, "content", "The content to repeat", true)
                 .addOption(OptionType.CHANNEL, "channel", "The channel to send the message to", true);
-        return command;
     }
 
     /**

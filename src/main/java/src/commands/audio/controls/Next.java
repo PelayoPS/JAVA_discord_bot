@@ -9,13 +9,15 @@ import src.commands.audio.lavaplayer.PlayerManager;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Next implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
 
-    private static String name = "next";
-    private Category category = Category.AUDIO;
-    private String description = "Skips the current song";
+    private static final String name = "next";
+    private final Category category = Category.AUDIO;
+    private final String description = "Skips the current song";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -31,10 +33,10 @@ public class Next implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        for (int amount = event.getOption("amount").getAsInt(); amount > 0; amount--) {
-            PlayerManager.getInstance().getMusicManager(event.getGuild()).scheduler.nextTrack();
+        for (int amount = Objects.requireNonNull(event.getOption("amount")).getAsInt(); amount > 0; amount--) {
+            PlayerManager.getInstance().getMusicManager(Objects.requireNonNull(event.getGuild())).scheduler.nextTrack();
         }
-        AudioTrackInfo trackInfo = PlayerManager.getInstance().getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack().getInfo();
+        AudioTrackInfo trackInfo = PlayerManager.getInstance().getMusicManager(Objects.requireNonNull(event.getGuild())).getAudioPlayer().getPlayingTrack().getInfo();
         event.reply(trackInfo.title+trackInfo.author+" -> "+trackInfo.uri).queue();
     }
 
@@ -46,9 +48,8 @@ public class Next implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.INTEGER, "amount", "The amount of songs to skip", true);
-        return commandData;
     }
 
     /**

@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import src.DiscordBot;
 import src.util.logging.SlashCommandLogger;
 
+import java.util.Objects;
+
 public class Invoker extends ListenerAdapter {
     private final CommandManager commandManager;
 
@@ -24,7 +26,7 @@ public class Invoker extends ListenerAdapter {
         if (command == null) {
             event.reply("Command not found").queue();
         }
-        if(event.getMember().getPermissions().contains(command.getCategory().getPermission())) {
+        if(Objects.requireNonNull(event.getMember()).getPermissions().contains(Objects.requireNonNull(command).getCategory().getPermission())) {
             command.handle(event);
         } else {
             event.reply("You don't have permission to use this command!").setEphemeral(true).queue();

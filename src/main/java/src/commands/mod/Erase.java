@@ -11,6 +11,7 @@ import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Erase implements CommandInterface {
 
@@ -20,7 +21,7 @@ public class Erase implements CommandInterface {
 
     private final Category category = Category.MOD;
 
-    private String description = "Erases the given amount of messages in the channel provided";
+    private final String description = "Erases the given amount of messages in the channel provided";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -32,15 +33,15 @@ public class Erase implements CommandInterface {
     /**
      * When a slash command with the name erase is used this method is called
      * it deletes the amount of messages given in the channel provided
-     * @param event
+     * @param event the event called
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        if(!event.getMember().getPermissions().contains(Permission.MESSAGE_MANAGE)){
+        if(!Objects.requireNonNull(event.getMember()).getPermissions().contains(Permission.MESSAGE_MANAGE)){
             return;
         }
-        TextChannel channel = event.getOption("channel").getAsChannel().asTextChannel();
-        int amount = event.getOption("amount").getAsInt();
+        TextChannel channel = Objects.requireNonNull(event.getOption("channel")).getAsChannel().asTextChannel();
+        int amount = Objects.requireNonNull(event.getOption("amount")).getAsInt();
         List<Message> messages = getMessagesToDelete(amount, channel);
         if(messages.size() < 2) {
             messages.get(0).delete().queue();
@@ -58,9 +59,9 @@ public class Erase implements CommandInterface {
 
     /**
      * private method to make the code cleaner
-     * @param amountToDelete
-     * @param channel
-     * @return
+     * @param amountToDelete the integer representing the amount to delete
+     * @param channel the channel where the messages should be deleted
+     * @return a list of messages to delete
      */
     private List<Message> getMessagesToDelete(int amountToDelete, TextChannel channel){
         List<Message> messagesToDelete;
@@ -71,15 +72,14 @@ public class Erase implements CommandInterface {
     // ====================RETURN INFO SECTION====================//
 
     /**
-     * returns the command data
-     * @return
+     * @return the command data
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.INTEGER, "amount", "The amount of messages to delete", true)
                 .addOption(OptionType.CHANNEL, "channel", "The channel to delete the messages from", true);
-        return command;
+
     }
 
     /**

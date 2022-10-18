@@ -4,6 +4,8 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import src.DiscordBot;
 
+import java.util.Objects;
+
 public class SlashCommandLogger implements Logger<SlashCommandInteractionEvent> {
 
     public SlashCommandLogger() {
@@ -22,14 +24,14 @@ public class SlashCommandLogger implements Logger<SlashCommandInteractionEvent> 
          * [command] [user] [channel] [guild] [time] [command completed]
          */
         String channelID = DiscordBot.getConfig().get("COMMANDLOGCHANNELID");
-        event.getJDA().getTextChannelById(channelID)
+        Objects.requireNonNull(event.getJDA().getTextChannelById(channelID))
                 .sendMessageEmbeds(
                     new EmbedBuilder()
                         .setTitle("Slash command used")
                         .addField("Command name", event.getName(), true)
                         .addField("User", event.getUser().getAsTag(), true)
                         .addField("Channel", event.getChannel().getName(), true)
-                        .addField("Guild", event.getGuild().getName(), true)
+                        .addField("Guild", Objects.requireNonNull(event.getGuild()).getName(), true)
                         .addField("Time", event.getTimeCreated().toString(), true)
                         .addField("Command", event.getCommandString(), true)
                         .build()

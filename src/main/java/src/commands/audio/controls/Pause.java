@@ -7,14 +7,16 @@ import src.commands.audio.lavaplayer.PlayerManager;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Pause implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
 
-    private static String name = "pause";
-    private Category category = Category.AUDIO;
+    private static final String name = "pause";
+    private final Category category = Category.AUDIO;
 
-    private String description = "Pauses the current song";
+    private final String description = "Pauses the current song";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -29,7 +31,7 @@ public class Pause implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        PlayerManager.getInstance().getMusicManager(event.getGuild()).getAudioPlayer().setPaused(true);
+        PlayerManager.getInstance().getMusicManager(Objects.requireNonNull(event.getGuild())).getAudioPlayer().setPaused(true);
         event.reply("Paused").queue();
     }
 

@@ -17,7 +17,7 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
      * the audio player is the one that is used to play the audio
      * the buffer is used to store the audio data
      * the frame is used to store the audio data in the buffer
-     * @param audioPlayer
+     * @param audioPlayer the audio player
      */
     public AudioPlayerSendHandler(AudioPlayer audioPlayer) {
         this.audioPlayer = audioPlayer;
@@ -27,8 +27,7 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
     }
 
     /**
-     * returns true if the audio player can provide audio
-     * @return
+     * @return true if the audio player can provide audio
      */
     @Override
     public boolean canProvide() {
@@ -36,8 +35,7 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
     }
 
     /**
-     * returns the audio data
-     * @return
+     * @return the audio data
      */
     @Override
     public ByteBuffer provide20MsAudio() {
@@ -45,8 +43,7 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
     }
 
     /**
-     * returns false because we don't want to use opus
-     * @return
+     * @return true
      */
     @Override
     public boolean isOpus() {

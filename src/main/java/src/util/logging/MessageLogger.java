@@ -3,6 +3,8 @@ package src.util.logging;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import src.DiscordBot;
 
+import java.util.Objects;
+
 public class MessageLogger implements Logger<MessageReceivedEvent> {
 
     private final DiscordBot bot;
@@ -35,11 +37,11 @@ public class MessageLogger implements Logger<MessageReceivedEvent> {
             return;
         }
         if (event.isFromGuild()) {//if message is from a server
-            event.getGuild().getTextChannelById(textLogChannelId)
+            Objects.requireNonNull(event.getGuild().getTextChannelById(textLogChannelId))
                     .sendMessage("[" + event.getChannel().getAsMention() + "] [" + event.getAuthor().getAsMention() + "] " +
                             '"' + event.getMessage().getContentRaw()+ '"').queue();
         } else {//if message is from a private message
-            bot.getJda().getTextChannelById(dmLogChannelId)//if you try to get channel as if it was from guild it will throw an exception
+            Objects.requireNonNull(bot.getJda().getTextChannelById(dmLogChannelId))//if you try to get channel as if it was from guild it will throw an exception
                     .sendMessage("[dm] [" + event.getAuthor().getAsTag() + "] " +
                             '"' + event.getMessage().getContentRaw() + '"').queue();
         }

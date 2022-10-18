@@ -7,14 +7,16 @@ import src.commands.audio.lavaplayer.PlayerManager;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Resume implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
 
-    private static String name = "resume";
-    private Category category = Category.AUDIO;
+    private static final String name = "resume";
+    private final Category category = Category.AUDIO;
 
-    private String description = "Resumes the current song";
+    private final String description = "Resumes the current song";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -29,7 +31,7 @@ public class Resume implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        PlayerManager.getInstance().getMusicManager(event.getGuild()).getAudioPlayer().setPaused(false);
+        PlayerManager.getInstance().getMusicManager(Objects.requireNonNull(event.getGuild())).getAudioPlayer().setPaused(false);
         event.reply("Resumed").queue();
     }
 

@@ -6,14 +6,16 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class VoiceJoin implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
 
-    private static String name = "voicejoin";
-    private Category category = Category.AUDIO;
+    private static final String name = "voicejoin";
+    private final Category category = Category.AUDIO;
 
-    private String description = "Joins the voice channel where the user is in";
+    private final String description = "Joins the voice channel where the user is in";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -29,7 +31,7 @@ public class VoiceJoin implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        if(event.getMember().getVoiceState().getChannel() != null){
+        if(Objects.requireNonNull(Objects.requireNonNull(event.getMember()).getVoiceState()).getChannel() != null){
             event.getMember().getVoiceState().getChannel().getGuild().getAudioManager().openAudioConnection(event.getMember().getVoiceState().getChannel());
             event.reply("Joined " + event.getMember().getVoiceState().getChannel().getName()).queue();
         } else {
@@ -45,8 +47,7 @@ public class VoiceJoin implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, description);
-        return commandData;
+        return Commands.slash(name, description);
     }
 
     /**

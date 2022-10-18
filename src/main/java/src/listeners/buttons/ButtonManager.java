@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ButtonManager {
 
-    private List<ButtonListener> buttonListeners = new ArrayList<>();
+    private final List<ButtonListener> buttonListeners = new ArrayList<>();
 
     public ButtonManager() {
         registerButtonListener();

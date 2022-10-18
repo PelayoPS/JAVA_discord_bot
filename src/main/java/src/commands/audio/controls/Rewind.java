@@ -7,14 +7,16 @@ import src.commands.audio.lavaplayer.PlayerManager;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Rewind implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
 
-    private static String name = "rewind";
-    private Category category = Category.AUDIO;
+    private static final String name = "rewind";
+    private final Category category = Category.AUDIO;
 
-    private String description = "Rewinds the current song";
+    private final String description = "Rewinds the current song";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -29,7 +31,7 @@ public class Rewind implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-            PlayerManager.getInstance().getMusicManager(event.getGuild()).getAudioPlayer()
+            PlayerManager.getInstance().getMusicManager(Objects.requireNonNull(event.getGuild())).getAudioPlayer()
                     .playTrack(PlayerManager.getInstance().getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack().makeClone());
     }
 

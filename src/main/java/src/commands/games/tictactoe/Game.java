@@ -9,12 +9,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Game {
-    private User player1;
-    private User player2;
+    private final User player1;
+    private final User player2;
     private User currentPlayer;
-    private ButtonStyle player1Style = ButtonStyle.SUCCESS;//green color of button
-    private ButtonStyle player2Style = ButtonStyle.DANGER;//red color of button
-    private Board board;
+    private final ButtonStyle player1Style = ButtonStyle.SUCCESS;//green color of button
+    private final ButtonStyle player2Style = ButtonStyle.DANGER;//red color of button
+    private final Board board;
 
     /**
      * creates a game with two players and a board
@@ -46,12 +46,10 @@ public class Game {
         if (board.boardButtons[x][y].getLabel().equals("🟦") && event.getUser().equals(currentPlayer)) {
             event.editButton(board.boardButtons[x][y] = board.boardButtons[x][y]
                     .withLabel(currentPlayer.equals(player1) ? board.getPlayer1Symbol() : board.getPlayer2Symbol())
-                    .withStyle(currentPlayer.equals(player1) ? player1Style : player2Style)).onSuccess(v -> {
-                        checkWin();
-                        changeTurn();
-                        checkDraw();
-                    }
-            ).queue();
+                    .withStyle(currentPlayer.equals(player1) ? player1Style : player2Style)).queue();
+            checkWin();
+            changeTurn();
+            checkDraw();
 
             return;
         }
@@ -141,12 +139,9 @@ public class Game {
                 !board.boardButtons[0][0].getLabel().equals("🟦")) {
             return true;
         }
-        if (board.boardButtons[0][2].getLabel().equals(board.boardButtons[1][1].getLabel()) &&
+        return board.boardButtons[0][2].getLabel().equals(board.boardButtons[1][1].getLabel()) &&
                 board.boardButtons[1][1].getLabel().equals(board.boardButtons[2][0].getLabel()) &&
-                !board.boardButtons[0][2].getLabel().equals("🟦")) {
-            return true;
-        }
-        return false;
+                !board.boardButtons[0][2].getLabel().equals("🟦");
     }
 
 

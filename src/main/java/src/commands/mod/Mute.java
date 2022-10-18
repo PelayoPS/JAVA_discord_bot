@@ -14,6 +14,7 @@ import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Mute implements CommandInterface {
 
@@ -23,9 +24,9 @@ public class Mute implements CommandInterface {
 
     private final Category category = Category.MOD;
 
-    private String description = "Mutes the user given";
+    private final String description = "Mutes the user given";
 
-    Dotenv config = DiscordBot.getConfig();
+    final Dotenv config = DiscordBot.getConfig();
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -41,12 +42,12 @@ public class Mute implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
+        if(!Objects.requireNonNull(event.getMember()).getPermissions().contains(Permission.ADMINISTRATOR)){
             return;
         }
         try {
-            muteUser(event.getOption("user"), event.getOption("time"));
-            logMute(event, event.getOption("user"), event.getOption("time"));
+            muteUser(Objects.requireNonNull(event.getOption("user")), Objects.requireNonNull(event.getOption("time")));
+            logMute(event, Objects.requireNonNull(event.getOption("user")), Objects.requireNonNull(event.getOption("time")));
         } catch (HierarchyException e) {
             event.reply("I can't mute a user with higher or equal role than me").queue();
         }
@@ -63,11 +64,9 @@ public class Mute implements CommandInterface {
          * gives the user the muted role
          * removes the muted role after the time given
          */
-        user.getAsUser().openPrivateChannel().queue((channel) -> {
-            channel.sendMessage("You have been muted for " + time.getAsLong() + " seconds").queue();
-        });
+        user.getAsUser().openPrivateChannel().queue((channel) -> channel.sendMessage("You have been muted for " + time.getAsLong() + " seconds").queue());
         //muted rol
-        Role role = user.getAsMember().getGuild().getRolesByName("muted",true).get(0);
+        Role role = Objects.requireNonNull(user.getAsMember()).getGuild().getRolesByName("muted",true).get(0);
         //adds muted role
         user.getAsMember().getGuild()
             .addRoleToMember(user.getAsMember(), role).queue();
@@ -98,10 +97,10 @@ public class Mute implements CommandInterface {
         /*
          * sends a message to the log channel saying who muted who for how long
          */
-        event.getGuild().getTextChannelById(config.get("MUTEDLOGCHANNELID"))
+        Objects.requireNonNull(Objects.requireNonNull(event.getGuild()).getTextChannelById(config.get("MUTEDLOGCHANNELID")))
             .sendMessage(user.getAsUser().getAsTag() +
                     " was muted by " + event.getUser().getAsTag() +
-                    " for " + time.getAsLong() + " seconds with reason: " + event.getOption("reason").getAsString()).queue();
+                    " for " + time.getAsLong() + " seconds with reason: " + Objects.requireNonNull(event.getOption("reason")).getAsString()).queue();
         event.reply("Muted " + user.getAsUser().getAsTag() + " for " + time.getAsLong() + " seconds").queue();
     }
 
@@ -112,11 +111,10 @@ public class Mute implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.USER, "user", "The user to mute", true)
                 .addOption(OptionType.STRING, "reason", "The reason for the mute", true)
                 .addOption(OptionType.INTEGER, "time", "The time to mute the user for", true);
-        return command;
     }
 
     /**

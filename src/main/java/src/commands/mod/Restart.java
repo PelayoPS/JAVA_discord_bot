@@ -9,6 +9,8 @@ import src.Main;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 
 public class Restart implements CommandInterface {
 
@@ -18,7 +20,7 @@ public class Restart implements CommandInterface {
 
     private static final Category category = Category.MOD;
 
-    private String description = "Restarts the bot";
+    private final String description = "Restarts the bot";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -34,7 +36,7 @@ public class Restart implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
+        if(!Objects.requireNonNull(event.getMember()).getPermissions().contains(Permission.ADMINISTRATOR)){
             return;
         }
         event.reply("Restarting...").setEphemeral(true).queue();
@@ -48,7 +50,7 @@ public class Restart implements CommandInterface {
     }
 
     /**
-     * thows an exception to restart the bot
+     * throws an exception to restart the bot
      * @return
      */
     private void restart() throws Exception {
@@ -70,8 +72,7 @@ public class Restart implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, description);
-        return command;
+        return Commands.slash(name, description);
     }
 
     /**

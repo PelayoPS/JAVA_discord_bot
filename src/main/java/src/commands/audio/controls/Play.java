@@ -11,15 +11,16 @@ import src.util.commandPattern.CommandInterface;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class Play implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
 
-    private static String name = "play";
-    private Category category = Category.AUDIO;
+    private static final String name = "play";
+    private final Category category = Category.AUDIO;
 
-    private String description = "Link to play";
+    private final String description = "Link to play";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -29,13 +30,13 @@ public class Play implements CommandInterface {
     // ====================HANDLING SECTION====================//
 
     /**
-     * When the command is executed it plays a link from a song or playlist from youtube
+     * When the command is executed it plays a link from a song or playlist from YouTube
      *
      * @param event The event
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        if(event.getMember().getVoiceState().getChannel() != null){
+        if(Objects.requireNonNull(Objects.requireNonNull(event.getMember()).getVoiceState()).getChannel() != null){
             event.getMember().getVoiceState().getChannel().getGuild().getAudioManager().openAudioConnection(event.getMember().getVoiceState().getChannel());
             play(event,event.getChannel().asTextChannel());
 
@@ -53,10 +54,8 @@ public class Play implements CommandInterface {
      * @param channel The channel
      */
     private void play(SlashCommandInteractionEvent event, TextChannel channel) {
-        String link = event.getOption("link").getAsString();
-        if (link.contains("list")){
-            //link doesn't need to be modified
-        } else {
+        String link = Objects.requireNonNull(event.getOption("link")).getAsString();
+        if (!link.contains("list")){
             if (!isUrl(link)) {
                 link = "ytsearch:" + link;
             }
@@ -85,9 +84,8 @@ public class Play implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.STRING, "link", description, true);
-        return commandData;
     }
 
     /**

@@ -8,12 +8,10 @@ import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
 
 import java.util.Arrays;
+import java.util.Objects;
 
+@SuppressWarnings("SameReturnValue")
 public class Board {
-
-    private String player1Symbol = "\u2705";//"✅";
-    private String player2Symbol = "\u274C";//"❌";
-    public Board board;
     private SlashCommandInteractionEvent event;
     public Button[][] boardButtons = new Button[3][3];
 
@@ -22,16 +20,15 @@ public class Board {
      * @param event The event that triggered the command
      */
     public void drawBoard(SlashCommandInteractionEvent event) {
-        board = this;
         this.event = event;
         MessageEmbed embed = new EmbedBuilder()
                 .setTitle("TicTacToe")
                 .setDescription(
-                        "Your game vs " + event.getOption("opponent").getAsMember().getAsMention()+" has just started\n"
+                        "Your game vs " + Objects.requireNonNull(Objects.requireNonNull(event.getOption("opponent")).getAsMember()).getAsMention()+" has just started\n"
                                 + "To make a move, click the corresponding button\n"
                 )
                 .addField("Player 1: ", event.getUser().getAsTag(), true)
-                .addField("Player 2: ", event.getOption("opponent").getAsUser().getAsTag(), true)
+                .addField("Player 2: ", Objects.requireNonNull(event.getOption("opponent")).getAsUser().getAsTag(), true)
                 .setColor(TicTacToe.boardColor)
                 .build();
         ReplyCallbackAction replyCallbackAction = event.replyEmbeds(embed);
@@ -64,26 +61,27 @@ public class Board {
 
 
     /**
-     * returns the symbol that belongs to the player 1
-     * @return
+     * @return the symbol that belongs to the player 1
      */
     public String getPlayer1Symbol() {
-        return player1Symbol;
+        //"✅";
+        return "\u2705";
     }
 
     /**
-     * returns the symbol that belongs to the player 2
-     * @return
+     * @return the symbol that belongs to the player 2
      */
     public String getPlayer2Symbol() {
-        return player2Symbol;
+        //"❌";
+        return "\u274C";
     }
 
     /**
      * ends the game when called in the game class
      * edits the message to show the winner
-     * @param message
+     * @param message the message that we use as description
      */
+    @SuppressWarnings("UnusedAssignment")//used bc we need to update the button I think
     public void endGame (String message) {
         event.getHook().editOriginalEmbeds(new EmbedBuilder()
                 .setTitle("TicTacToe")

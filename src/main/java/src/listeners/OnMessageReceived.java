@@ -2,11 +2,12 @@ package src.listeners;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import src.DiscordBot;
 import src.util.logging.MessageLogger;
 
 public class OnMessageReceived extends ListenerAdapter {
-    private DiscordBot bot = null;
+    private final DiscordBot bot;
     public OnMessageReceived(DiscordBot bot) {
         this.bot = bot;
     }
@@ -19,7 +20,7 @@ public class OnMessageReceived extends ListenerAdapter {
      *
      */
     @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         new MessageLogger(bot).logEvent(event, DiscordBot.isProductionEnabled());
     }
 }

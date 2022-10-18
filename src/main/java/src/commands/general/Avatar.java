@@ -9,13 +9,15 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Avatar implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
 
     private static final String name = "avatar";
     private static final Category category = Category.GENERAL;
-    private String description = "Returns the avatar of the given user";
+    private final String description = "Returns the avatar of the given user";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -29,7 +31,7 @@ public class Avatar implements CommandInterface {
      * it sends the avatar of the user given to the channel the command was used in
      * if the user doesn't have an avatar it sends a message saying they don't have an avatar
      * with the default avatar
-     * @param event
+     * @param event the event called
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
@@ -44,52 +46,45 @@ public class Avatar implements CommandInterface {
 
     /**
      * returns the avatar when there is one
-     * @param event
+     * @param event the event with the information
      */
     private MessageEmbed getEmbedWithAvatar(SlashCommandInteractionEvent event){
-        MessageEmbed message = new EmbedBuilder()
-                .setTitle("Avatar of " + event.getOption("user").getAsUser().getName())
-                .setImage(event.getOption("user").getAsUser().getAvatarUrl() + "?format=png&dynamic=true&size=1024")
+        return new EmbedBuilder()
+                .setTitle("Avatar of " + Objects.requireNonNull(event.getOption("user")).getAsUser().getName())
+                .setImage(Objects.requireNonNull(event.getOption("user")).getAsUser().getAvatarUrl() + "?format=png&dynamic=true&size=1024")
                 .build();
-        return message;
     }
 
     /**
-     * returns the default avatar when there isn't one
-     * @return
+     * @return the default avatar when there isn't one
      */
     private MessageEmbed getEmbedWithDefaultAvatar(SlashCommandInteractionEvent event){
-        MessageEmbed message = new EmbedBuilder()
-                .setTitle(event.getOption("user").getAsUser().getName() + " does not have an avatar")
-                .setImage(event.getOption("user").getAsUser().getDefaultAvatarUrl() + "?format=png&dynamic=true&size=1024")
+        return new EmbedBuilder()
+                .setTitle(Objects.requireNonNull(event.getOption("user")).getAsUser().getName() + " does not have an avatar")
+                .setImage(Objects.requireNonNull(event.getOption("user")).getAsUser().getDefaultAvatarUrl() + "?format=png&dynamic=true&size=1024")
                 .build();
-        return message;
     }
 
     // ====================RETURN INFO SECTION====================//
 
     /**
-     * Returns the command data for the command
-     * @return
+     * @return the command data for the command
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.USER, "user", "The user to get the avatar of", true);
-        return command;
     }
 
     /**
-     * Returns the name of the command for the command manager
-     * @return
+     * @return the name of the command for the command manager
      */
     public static String getNameForManagement() {
         return name;
     }
 
     /**
-     * Returns the name of the command for general use
-     * @return
+     * @return the name of the command for general use
      */
     @Override
     public String getName(){
@@ -97,8 +92,7 @@ public class Avatar implements CommandInterface {
     }
 
     /**
-     * Returns the category of the command
-     * @return
+     * @return the category of the command
      */
     @Override
     public Category getCategory(){
@@ -106,8 +100,7 @@ public class Avatar implements CommandInterface {
     }
 
     /**
-     * Returns the description of the command
-     * @return
+     * @return the description of the command
      */
     @Override
     public String getHelp(){

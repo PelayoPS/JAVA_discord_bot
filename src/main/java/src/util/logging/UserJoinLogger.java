@@ -5,12 +5,11 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import src.DiscordBot;
 
+import java.util.Objects;
+
 public class UserJoinLogger implements Logger<GuildMemberJoinEvent>{
 
-    private final DiscordBot bot;
-
-    public UserJoinLogger(DiscordBot bot) {
-        this.bot = bot;
+    public UserJoinLogger() {
     }
 
     /**
@@ -37,7 +36,7 @@ public class UserJoinLogger implements Logger<GuildMemberJoinEvent>{
         embed.setDescription("[" + event.getUser().getName() + "] joined the server.");
         embed.setImage(event.getUser().getAvatarUrl());
         MessageEmbed msgEmbed = embed.build();
-        event.getGuild().getTextChannelById(channelID).sendMessageEmbeds(msgEmbed).queue();
+        Objects.requireNonNull(event.getGuild().getTextChannelById(channelID)).sendMessageEmbeds(msgEmbed).queue();
         System.out.println("User joined guild!");
     }
 }

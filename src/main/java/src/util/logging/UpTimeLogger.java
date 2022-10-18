@@ -1,6 +1,5 @@
 package src.util.logging;
 
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 
 import java.util.concurrent.TimeUnit;
@@ -8,12 +7,10 @@ import java.util.concurrent.TimeUnit;
 public class UpTimeLogger implements Logger<ReadyEvent> {
 
     private static long startTime = 0;
-    private final JDA bot;
 
 
-    public UpTimeLogger(JDA bot) {
+    public UpTimeLogger() {
         startTime = System.currentTimeMillis();
-        this.bot = bot;
     }
 
     /**

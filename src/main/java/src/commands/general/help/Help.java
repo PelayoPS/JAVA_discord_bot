@@ -17,7 +17,7 @@ public class Help implements CommandInterface {
 
     private final Category category = Category.GENERAL;
 
-    private String description = "Shows all commands";
+    private final String description = "Shows all commands";
 
     // ====================CONSTRUCTOR SECTION====================//
 

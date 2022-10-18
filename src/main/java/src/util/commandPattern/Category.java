@@ -3,20 +3,14 @@ package src.util.commandPattern;
 import net.dv8tion.jda.api.Permission;
 
 public enum Category {
-    GENERAL("General"),
-    MOD("Moderation"),
+    GENERAL(),
+    MOD(),
 
-    AUDIO("Audio"),
+    AUDIO(),
 
-    GAME("Game");
-    private final String name;
+    GAME();
 
-    Category(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+    Category() {
     }
 
     public Permission getPermission() {

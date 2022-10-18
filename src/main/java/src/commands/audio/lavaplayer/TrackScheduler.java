@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class TrackScheduler extends AudioEventAdapter {
     public final AudioPlayer player;
     public final BlockingQueue<AudioTrack> queue;
-    public boolean repeating = false;
+    public final boolean repeating = false;
 
     /**
      * Creates a TrackScheduler.
@@ -29,6 +29,7 @@ public class TrackScheduler extends AudioEventAdapter {
      * adds a track to the queue
      * @param track
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void queue(AudioTrack track) {
         if (!this.player.startTrack(track, true)) {
             this.queue.offer(track);

@@ -11,6 +11,7 @@ import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
 import java.time.OffsetDateTime;
+import java.util.Objects;
 
 public class UserInfo implements CommandInterface {
 
@@ -20,7 +21,7 @@ public class UserInfo implements CommandInterface {
 
     private final Category category = Category.GENERAL;
 
-    private String description = "Returns information about a user";
+    private final String description = "Returns information about a user";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -36,15 +37,15 @@ public class UserInfo implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        String status = getStatus(event.getOption("user"));
-        OffsetDateTime creationDate = event.getOption("user").getAsUser().getTimeCreated();
+        String status = getStatus(Objects.requireNonNull(event.getOption("user")));
+        OffsetDateTime creationDate = Objects.requireNonNull(event.getOption("user")).getAsUser().getTimeCreated();
         //formats the creation date
         String creationDateS = creationDate.getYear() + "-" + creationDate.getMonthValue() + "-" + creationDate.getDayOfMonth();
-        OffsetDateTime joinDate = event.getOption("user").getAsMember().getTimeJoined();
+        OffsetDateTime joinDate = Objects.requireNonNull(Objects.requireNonNull(event.getOption("user")).getAsMember()).getTimeJoined();
         //formats the join date
         String joinDateS = joinDate.getYear() + "-" + joinDate.getMonthValue() + "-" + joinDate.getDayOfMonth();
-        String name = event.getOption("user").getAsUser().getName();
-        String id = event.getOption("user").getAsUser().getId();
+        String name = Objects.requireNonNull(event.getOption("user")).getAsUser().getName();
+        String id = Objects.requireNonNull(event.getOption("user")).getAsUser().getId();
         String avatar = getAvatar(event);
         MessageEmbed message = new EmbedBuilder()
                 .setThumbnail(avatar)
@@ -66,9 +67,9 @@ public class UserInfo implements CommandInterface {
      */
     private String getAvatar(SlashCommandInteractionEvent event){
         try {
-            return (event.getOption("user").getAsUser().getAvatarUrl() + "?format=png&dynamic=true&size=1024");
+            return (Objects.requireNonNull(event.getOption("user")).getAsUser().getAvatarUrl() + "?format=png&dynamic=true&size=1024");
         } catch (IllegalArgumentException e) {
-            return (event.getOption("user").getAsUser().getDefaultAvatarUrl() + "?format=png&dynamic=true&size=1024");
+            return (Objects.requireNonNull(event.getOption("user")).getAsUser().getDefaultAvatarUrl() + "?format=png&dynamic=true&size=1024");
         }
     }
 
@@ -83,24 +84,15 @@ public class UserInfo implements CommandInterface {
      * UNKNOWN("");
      */
     private String getStatus(OptionMapping user) {
-        String status = user.getAsMember().getOnlineStatus().getKey();
-        switch (status) {
-            case "online":
-                status = "🟢 Online";
-                break;
-            case "dnd":
-                status = "⛔ No molestar";
-                break;
-            case "idle":
-                status = "🌙 Ausente";
-                break;
-            case "offline":
-                status = "⚪ Desconocido";
-                break;
-            case "invisible":
-                status = "⚫ Invisible";
-                break;
-        }
+        String status = Objects.requireNonNull(user.getAsMember()).getOnlineStatus().getKey();
+        status = switch (status) {
+            case "online" -> "🟢 Online";
+            case "dnd" -> "⛔ No molestar";
+            case "idle" -> "🌙 Ausente";
+            case "offline" -> "⚪ Desconocido";
+            case "invisible" -> "⚫ Invisible";
+            default -> Objects.requireNonNull(user.getAsMember()).getOnlineStatus().getKey();
+        };
         return status;
     }
 
@@ -112,9 +104,8 @@ public class UserInfo implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.USER, "user", "User to get the info", true);
-        return command;
     }
 
     /**

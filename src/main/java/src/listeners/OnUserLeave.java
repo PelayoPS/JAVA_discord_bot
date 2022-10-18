@@ -2,14 +2,13 @@ package src.listeners;
 
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import src.DiscordBot;
 import src.listeners.serverStats.MemberStats;
 import src.util.logging.UserLeaveLogger;
 
 public class OnUserLeave extends ListenerAdapter {
-    private DiscordBot bot = null;
-    public OnUserLeave(DiscordBot discordBot) {
-        this.bot = discordBot;
+    public OnUserLeave() {
     }
 
     /**
@@ -17,8 +16,8 @@ public class OnUserLeave extends ListenerAdapter {
      * Prints a message to the console when a user leaves a guild.
      */
     @Override
-    public void onGuildMemberRemove(GuildMemberRemoveEvent event) {
-        new UserLeaveLogger(bot).logEvent(event, DiscordBot.isProductionEnabled());
+    public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
+        new UserLeaveLogger().logEvent(event, DiscordBot.isProductionEnabled());
         MemberStats.updateStats(event.getGuild());
     }
 }

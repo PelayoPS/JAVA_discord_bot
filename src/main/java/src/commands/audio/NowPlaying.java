@@ -8,14 +8,16 @@ import src.commands.audio.lavaplayer.PlayerManager;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class NowPlaying implements CommandInterface {
 
 // ====================VARIABLES SECTION====================//
 
-    private static String name = "nowplaying";
-    private Category category = Category.AUDIO;
+    private static final String name = "nowplaying";
+    private final Category category = Category.AUDIO;
 
-    private String description = "Shows the current song";
+    private final String description = "Shows the current song";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -30,7 +32,7 @@ public class NowPlaying implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        AudioTrackInfo trackInfo = PlayerManager.getInstance().getMusicManager(event.getGuild()).getAudioPlayer().getPlayingTrack().getInfo();
+        AudioTrackInfo trackInfo = PlayerManager.getInstance().getMusicManager(Objects.requireNonNull(event.getGuild())).getAudioPlayer().getPlayingTrack().getInfo();
         event.reply(trackInfo.title+trackInfo.author+" -> "+trackInfo.uri).queue();
     }
 

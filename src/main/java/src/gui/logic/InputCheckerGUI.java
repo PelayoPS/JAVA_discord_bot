@@ -1,7 +1,9 @@
 package src.gui.logic;
 
 public class InputCheckerGUI {
+    @SuppressWarnings("UnusedReturnValue")
     public static boolean checkProdToken(String input) {
+        //TODO: check if the token is valid
         /*
          * creates a regex so the input has the format:
          * TOKENPROD=**************************.******.**************************************
@@ -12,6 +14,7 @@ public class InputCheckerGUI {
     }
 
     public static boolean checkID(String input) {
+        //TODO: check if the id is valid
         /*
          * creates a regex so the input has the format:
          * ID=******************

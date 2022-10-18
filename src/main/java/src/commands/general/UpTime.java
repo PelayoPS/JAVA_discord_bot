@@ -15,7 +15,7 @@ public class UpTime implements CommandInterface {
 
     private final Category category = Category.GENERAL;
 
-    private String description = "Returns the bot's uptime";
+    private final String description = "Returns the bot's uptime";
 
     // ====================CONSTRUCTOR SECTION====================//
 

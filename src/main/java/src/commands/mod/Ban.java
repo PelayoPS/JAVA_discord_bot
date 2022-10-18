@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Ban implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
@@ -17,7 +19,7 @@ public class Ban implements CommandInterface {
 
     private final Category category = Category.MOD;
 
-    private String description = "Bans the user given";
+    private final String description = "Bans the user given";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -29,34 +31,32 @@ public class Ban implements CommandInterface {
     /**
      * When a slash command with the name ban is used this method is called
      * it bans the user given and sends a message to the channel the command was used in
-     * @param event
+     * @param event the event called
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        if(!event.getMember().getPermissions().contains(Permission.BAN_MEMBERS)){
+        if(!Objects.requireNonNull(event.getMember()).getPermissions().contains(Permission.BAN_MEMBERS)){
             return;
         }
-        event.reply(event.getOption("user").getAsUser().getAsTag() + " has been banned").queue(); // reply immediately
-        User user = event.getOption("user").getAsUser();
-        event.getGuild().ban(user, 0, null).queue();
+        event.reply(Objects.requireNonNull(event.getOption("user")).getAsUser().getAsTag() + " has been banned").queue(); // reply immediately
+        User user = Objects.requireNonNull(event.getOption("user")).getAsUser();
+        //noinspection ConstantConditions
+        Objects.requireNonNull(event.getGuild()).ban(user, 0, null).queue();
     }
 
     // ====================RETURN INFO SECTION====================//
 
     /**
-     * returns the command data
-     * @return
+     * @return the command data
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.USER, "user", "The user to ban", true);
-        return command;
     }
 
     /**
-     * gets the name of the command
-     * @return
+     * @return the name of the command
      */
     @Override
     public String getName() {
@@ -64,24 +64,21 @@ public class Ban implements CommandInterface {
     }
 
     /**
-     * gets the name of the command for management
-     * @return
+     * @return the name of the command for management
      */
     public static String getNameForManagement() {
         return name;
     }
 
     /**
-     * gets the category of the command
-     * @return
+     * @return the category of the command
      */
     public Category getCategory() {
         return category;
     }
 
     /**
-     * gets the description of the command
-     * @return
+     * @return the description of the command
      */
     @Override
     public String getHelp() {

@@ -60,11 +60,8 @@ public class MainWindow {
                  */
                 public void actionPerformed(ActionEvent e) {
                     String token = JOptionPane.showInputDialog("Please enter the token");
-                    if (InputCheckerGUI.checkProdToken(token)) {
-                        //the token has right format
-                    } else {
-                        //the token has wrong format
-                    }
+                    InputCheckerGUI.checkProdToken(token);//the token has right format
+//the token has wrong format
                 }
             });
         }
@@ -96,11 +93,8 @@ public class MainWindow {
                  */
                 public void actionPerformed(ActionEvent e) {
                     String serverID = JOptionPane.showInputDialog("Please enter the serverID");
-                    if (InputCheckerGUI.checkProdToken(serverID)) {
-                        //the serverID has right format
-                    } else {
-                        //the serverID has wrong format
-                    }
+                    InputCheckerGUI.checkProdToken(serverID);//the serverID has right format
+//the serverID has wrong format
                 }
             });
         }

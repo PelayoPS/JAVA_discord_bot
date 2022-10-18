@@ -9,14 +9,16 @@ import src.commands.audio.lavaplayer.PlayerManager;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Volume implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
 
-    private static String name = "volume";
-    private Category category = Category.AUDIO;
+    private static final String name = "volume";
+    private final Category category = Category.AUDIO;
 
-    private String description = "Sets the volume of the player (0-100)";
+    private final String description = "Sets the volume of the player (0-100)";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -27,15 +29,15 @@ public class Volume implements CommandInterface {
 
     /**
      * Sets the volume of the current song
-     * @param event
+     * @param event the event called
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(event.getGuild());
+        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(Objects.requireNonNull(event.getGuild()));
         if (musicManager == null) {
             event.reply("There is no song playing").queue();
         } else {
-            int volume = event.getOption("volume").getAsInt();
+            int volume = Objects.requireNonNull(event.getOption("volume")).getAsInt();
             musicManager.setVolume(volume);
             event.reply("Volume set to " + volume).queue();
         }
@@ -44,19 +46,16 @@ public class Volume implements CommandInterface {
     // ====================RETURN INFO SECTION====================//
 
     /**
-     * Returns the slash command
-     * @return
+     * @return the slash command
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.INTEGER, "volume", "The volume to set", true);
-        return commandData;
     }
 
     /**
-     * Returns the name of the command
-     * @return
+     * @return the name of the command
      */
     @Override
     public String getName() {
@@ -64,8 +63,7 @@ public class Volume implements CommandInterface {
     }
 
     /**
-     * Returns the category of the command
-     * @return
+     * @return the category of the command
      */
     @Override
     public Category getCategory() {
@@ -73,16 +71,14 @@ public class Volume implements CommandInterface {
     }
 
     /**
-     * Returns the name of the command for management
-     * @return
+     * @return the name of the command for management
      */
     public static String getNameForManagement() {
         return name;
     }
 
     /**
-     * Returns the description of the command
-     * @return
+     * @return the description of the command
      */
     @Override
     public String getHelp() {

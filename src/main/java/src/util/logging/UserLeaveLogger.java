@@ -5,12 +5,11 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import src.DiscordBot;
 
+import java.util.Objects;
+
 public class UserLeaveLogger implements Logger<GuildMemberRemoveEvent> {
 
-    private final DiscordBot bot;
-
-    public UserLeaveLogger(DiscordBot bot) {
-        this.bot = bot;
+    public UserLeaveLogger() {
     }
 
     /**
@@ -37,7 +36,7 @@ public class UserLeaveLogger implements Logger<GuildMemberRemoveEvent> {
         embed.setDescription("[" + event.getUser().getName() + "] left the server.");
         embed.setImage(event.getUser().getAvatarUrl());
         MessageEmbed msgEmbed = embed.build();
-        event.getGuild().getTextChannelById(channelID).sendMessageEmbeds(msgEmbed).queue();
+        Objects.requireNonNull(event.getGuild().getTextChannelById(channelID)).sendMessageEmbeds(msgEmbed).queue();
         System.out.println(event.getUser().getName() + "User left guild!");
     }
 }

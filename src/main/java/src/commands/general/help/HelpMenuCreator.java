@@ -18,7 +18,6 @@ import java.util.*;
 public class HelpMenuCreator {
     
     private static CommandManager commandManager;
-    private Map<Category, String> commands = new HashMap<>();
 
     public static final Color helpColor = Color.BLUE;
 
@@ -27,10 +26,12 @@ public class HelpMenuCreator {
      * with the list of categories it creates a list of commands filtered by category
      * @param commandManager
      */
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     public HelpMenuCreator(CommandManager commandManager) {
-        this.commandManager = commandManager;
+        HelpMenuCreator.commandManager = commandManager;
         List<Category> categories = Arrays.stream(Category.values()).toList();
         for (Category category : categories) {
+            Map<Category, String> commands = new HashMap<>();
             commands.put(category, getMenu(category));
         }
     }
@@ -56,8 +57,8 @@ public class HelpMenuCreator {
         ReplyCallbackAction replyCallbackAction = event.replyEmbeds(getHelpEmbed());
         List<ItemComponent> buttons = new ArrayList<>();
         for (Category category : getCategories()) {
-            //if the user doesnt have permission to use the command it wont show up
-            if (event.getMember().hasPermission(category.getPermission())) {
+            //if the user doesn't have permission to use the command it won't show up
+            if (Objects.requireNonNull(event.getMember()).hasPermission(category.getPermission())) {
                 buttons.add(Button.of(ButtonStyle.PRIMARY, category.name(), category.name()));
             }
         }

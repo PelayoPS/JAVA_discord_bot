@@ -9,11 +9,13 @@ import src.listeners.serverStats.MemberStats;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class ReloadStats implements CommandInterface {
 
-    private static String name= "reloadstats";
-    private String description = "Reloads the stats for the server.";
-    private Category category = Category.MOD;
+    private static final String name= "reloadstats";
+    private final String description = "Reloads the stats for the server.";
+    private final Category category = Category.MOD;
 
     /**
      * When a slash command with the name reloadstats is used this method is called
@@ -21,7 +23,7 @@ public class ReloadStats implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        GuildEmojisUpdate.updateStats(event.getGuild());
+        GuildEmojisUpdate.updateStats(Objects.requireNonNull(event.getGuild()));
         MemberStats.updateStats(event.getGuild());
         BoostTier.updateStats(event.getGuild());
         event.reply("Stats reloaded").queue();

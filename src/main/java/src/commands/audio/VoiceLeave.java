@@ -7,14 +7,16 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class VoiceLeave implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
 
-    private static String name = "voiceleave";
-    private Category category = Category.AUDIO;
+    private static final String name = "voiceleave";
+    private final Category category = Category.AUDIO;
 
-    private String description = "Leaves the voice channel";
+    private final String description = "Leaves the voice channel";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -30,9 +32,9 @@ public class VoiceLeave implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        Channel channel = event.getGuild().getAudioManager().getConnectedChannel();
+        Channel channel = Objects.requireNonNull(event.getGuild()).getAudioManager().getConnectedChannel();
         event.getGuild().getAudioManager().closeAudioConnection();
-        event.reply("Left " + channel.getName()).queue();
+        event.reply("Left " + Objects.requireNonNull(channel).getName()).queue();
     }
 
     // ====================RETURN INFO SECTION====================//
@@ -43,8 +45,7 @@ public class VoiceLeave implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, description);
-        return commandData;
+        return Commands.slash(name, description);
     }
 
     /**

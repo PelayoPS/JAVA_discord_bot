@@ -11,6 +11,7 @@ import src.commands.games.tictactoe.TicTacToe;
 import src.commands.general.*;
 import src.commands.general.help.Help;
 import src.commands.mod.*;
+import src.commands.mod.setup.SetUp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class CommandManager {
 
     /**
      * Creates a new CommandManager
-     * @param jda
+     * @param jda the jda with the information
      */
     public CommandManager(JDA jda) {
         commands = new HashMap<>();
@@ -34,17 +35,15 @@ public class CommandManager {
     }
 
     /**
-     * returns the command with the given name
-     * @param name
-     * @return
+     * @param name string needed to get the command by name
+     * @return the command with the given name
      */
     public CommandInterface getCommand(String name) {
         return commands.get(name);
     }
 
     /**
-     * returns a list of CommandData for all the commands
-     * @return
+     * @return a list of CommandData for all the commands
      */
     public List<CommandData> getCommandDataAll() {
         List<CommandData> commandList = new ArrayList<>();
@@ -76,6 +75,7 @@ public class CommandManager {
         commands.put(Restart.getNameForManagement(), new Restart());
         commands.put(Warn.getNameForManagement(), new Warn());
         commands.put(ReloadStats.getNameForManagement(), new ReloadStats());
+        commands.put(SetUp.getNameForManagement(), new SetUp());
         //audio commands
         commands.put(VoiceJoin.getNameForManagement(), new VoiceJoin());
         commands.put(VoiceLeave.getNameForManagement(), new VoiceLeave());
@@ -95,12 +95,12 @@ public class CommandManager {
      * deletes all the old commands
      */
     private void eraseOldCommands() {
-        jda.retrieveCommands().complete().forEach(command -> eraseCommand(command));
+        jda.retrieveCommands().complete().forEach(this::eraseCommand);
     }
 
     /**
      * deletes the given command
-     * @param command
+     * @param command command to delete
      */
     private void eraseCommand(Command command) {
         if (!commands.containsKey(command.getName())) {
@@ -131,9 +131,8 @@ public class CommandManager {
     }
 
     /**
-     * Returns a list of commands for the given category
-     * @param category
-     * @return
+     * @param category category needed for filtering
+     * @return a list of commands for the given category
      */
     public List<String> getCommands(Category category) {
         List<String> commandList = new ArrayList<>();

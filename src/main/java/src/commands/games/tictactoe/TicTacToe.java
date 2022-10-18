@@ -8,15 +8,15 @@ import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class TicTacToe implements CommandInterface {
 
-    private static String name = "tictactoe";
-    private String description = "play a game of tictactoe";
-    private Category category = Category.GAME;
-    private Board board;
+    private static final String name = "tictactoe";
+    private final String description = "play a game of tictactoe";
+    private final Category category = Category.GAME;
     private static Game game;
-    public static Color boardColor = Color.GREEN;
+    public static final Color boardColor = Color.GREEN;
 
     /**
      * Starts the board
@@ -26,9 +26,9 @@ public class TicTacToe implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        this.board = new Board();
-        this.board.drawBoard(event);
-        this.game = new Game(event.getUser(), event.getOption("opponent").getAsUser(), board);
+        Board board = new Board();
+        board.drawBoard(event);
+        game = new Game(event.getUser(), Objects.requireNonNull(event.getOption("opponent")).getAsUser(), board);
     }
 
     /**
@@ -37,9 +37,8 @@ public class TicTacToe implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData commandData = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.USER, "opponent", "the user you want to play against", true);
-        return commandData;
     }
 
     /**

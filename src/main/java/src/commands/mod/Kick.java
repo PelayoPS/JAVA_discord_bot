@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Kick implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
@@ -17,7 +19,7 @@ public class Kick implements CommandInterface {
 
     private final Category category = Category.MOD;
 
-    private String description = "Kicks the user given";
+    private final String description = "Kicks the user given";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -33,12 +35,12 @@ public class Kick implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        if(!event.getMember().getPermissions().contains(Permission.KICK_MEMBERS)){
+        if(!Objects.requireNonNull(event.getMember()).getPermissions().contains(Permission.KICK_MEMBERS)){
             return;
         }
-        event.reply(event.getOption("user").getAsUser().getAsTag() + " has been kicked").queue(); // reply immediately
-        User user = event.getOption("user").getAsUser();
-        event.getGuild().kick(user).queue();
+        event.reply(Objects.requireNonNull(event.getOption("user")).getAsUser().getAsTag() + " has been kicked").queue(); // reply immediately
+        User user = Objects.requireNonNull(event.getOption("user")).getAsUser();
+        Objects.requireNonNull(event.getGuild()).kick(user).queue();
     }
 
     // ====================RETURN INFO SECTION====================//
@@ -49,9 +51,8 @@ public class Kick implements CommandInterface {
      */
     @Override
     public CommandData getSlash() {
-        CommandData command = Commands.slash(name, description)
+        return Commands.slash(name, description)
                 .addOption(OptionType.USER, "user", "The user to kick", true);
-        return command;
     }
 
     /**

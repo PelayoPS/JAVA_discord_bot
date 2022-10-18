@@ -12,6 +12,7 @@ import src.util.commandPattern.CommandInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class StreamOnline implements CommandInterface {
 
@@ -21,7 +22,7 @@ public class StreamOnline implements CommandInterface {
 
     private final Category category = Category.GENERAL;
 
-    private String description = "Returns the streamers that are online";
+    private final String description = "Returns the streamers that are online";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -37,17 +38,15 @@ public class StreamOnline implements CommandInterface {
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        List<Member> members = event.getJDA().getGuildById(DiscordBot.getConfig().get("SERVERID")).getMembers();
+        List<Member> members = Objects.requireNonNull(event.getJDA().getGuildById(DiscordBot.getConfig().get("SERVERID"))).getMembers();
         List<String> streamLinks = new ArrayList<>();
         members.stream().filter(member ->
-            !member.getUser().isBot() && member.getRoles().contains(event.getGuild().getRolesByName("Streamer", true).get(0)))//user is streamer
-                .forEach(member -> {
-                    member.getActivities().stream().filter(activity -> activity.getType().equals(net.dv8tion.jda.api.entities.Activity.ActivityType.STREAMING))//user is streaming
-                            .forEach(activity -> {
-                                        streamLinks.add(member.getEffectiveName() + " is streaming " + activity.getName() + " at " + activity.getUrl());//get link
-                                    }
-                            );
-                }
+            !member.getUser().isBot() && member.getRoles().contains(Objects.requireNonNull(event.getGuild()).getRolesByName("Streamer", true).get(0)))//user is streamer
+                .forEach(member -> member.getActivities().stream().filter(activity -> activity.getType().equals(net.dv8tion.jda.api.entities.Activity.ActivityType.STREAMING))//user is streaming
+                        .forEach(activity -> {
+                                    streamLinks.add(member.getEffectiveName() + " is streaming " + activity.getName() + " at " + activity.getUrl());//get link
+                                }
+                        )
         );
         String temp = !streamLinks.isEmpty() ? String.join("\n", streamLinks) : "No streamers are online";
         MessageEmbed embed = new EmbedBuilder()

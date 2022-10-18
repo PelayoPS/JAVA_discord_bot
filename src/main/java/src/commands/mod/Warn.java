@@ -11,16 +11,18 @@ import src.DiscordBot;
 import src.util.commandPattern.Category;
 import src.util.commandPattern.CommandInterface;
 
+import java.util.Objects;
+
 public class Warn implements CommandInterface {
 
     // ====================VARIABLES SECTION====================//
-    Dotenv config = DiscordBot.getConfig();
+    final Dotenv config = DiscordBot.getConfig();
 
     private static final String name = "warn";
 
     private final Category category = Category.MOD;
 
-    private String description = "Warns the user given";
+    private final String description = "Warns the user given";
 
     // ====================CONSTRUCTOR SECTION====================//
 
@@ -32,34 +34,32 @@ public class Warn implements CommandInterface {
     /**
      * When a slash command with the name warn is used this method is called
      * it warns the user given in the channel provided
-     * @param event
+     * @param event the event called
      */
     @Override
     public void handle(SlashCommandInteractionEvent event) {
-        if(!event.getMember().getPermissions().contains(Permission.ADMINISTRATOR)){
+        if(!Objects.requireNonNull(event.getMember()).getPermissions().contains(Permission.ADMINISTRATOR)){
             return;
         }
-        warnUser(event, event.getOption("user"), event.getOption("reason"));
-        event.reply("User [" + event.getOption("user").getAsUser().getAsTag() + "] warned").queue();
+        warnUser(event, Objects.requireNonNull(event.getOption("user")), event.getOption("reason"));
+        event.reply("User [" + Objects.requireNonNull(event.getOption("user")).getAsUser().getAsTag() + "] warned").queue();
     }
 
     /**
      * sends a private message to the user warned and logs the warning in the warn log channel
-     * @param user
+     * @param user the user to warn
      */
     private void warnUser(SlashCommandInteractionEvent event, OptionMapping user, OptionMapping reason){
-        user.getAsUser().openPrivateChannel().queue((channel) -> {
-            channel.sendMessage("You have been warned for " + reason.getAsString()).queue();
-        });
+        user.getAsUser().openPrivateChannel().queue((channel) -> channel.sendMessage("You have been warned for " + reason.getAsString()).queue());
         logWarn(event, user, reason);
     }
 
     /**
      * logs the warning in the warn log channel
-     * @param user
+     * @param user the user that has been warned
      */
     private void logWarn(SlashCommandInteractionEvent event, OptionMapping user, OptionMapping reason){
-        event.getGuild().getTextChannelById(config.get("WARNLOGCHANNELID"))
+        Objects.requireNonNull(Objects.requireNonNull(event.getGuild()).getTextChannelById(config.get("WARNLOGCHANNELID")))
                 .sendMessage(user.getAsUser().getAsTag() +
                         " was warned by " + event.getUser().getAsTag() +
                         " for " + reason.getAsString()).queue();
