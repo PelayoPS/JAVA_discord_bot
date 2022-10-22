@@ -10,8 +10,8 @@ In order to contribute to the project you will have to follow the next steps:
   -When developing without supervision your code must be sent to review before uploading it to the main branch
   
 ## Set up guide
-   -The project has been developed since the start using the intellj ide for java development, but you can use the one you want
-   -To install all the dependencies use maven or translate the pom.xml to the dependency manager you want to use
+   -The project has been developed since the start using the intellj ide for java development, but you can use the one you want \n
+   -To install all the dependencies use maven or translate the pom.xml to the dependency manager you want to use \n
    -To be able to work on the code you will need to have some knowledge in java
    -All the code is documented with javadoc, so you won't have problems understanding how methods work
    -The jdk used is the java 17
