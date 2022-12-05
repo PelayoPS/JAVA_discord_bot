@@ -77,6 +77,8 @@ public class CommandManager {
         commands.put(ReloadStats.getNameForManagement(), new ReloadStats());
         commands.put(SetUp.getNameForManagement(), new SetUp());
         //audio commands
+        //disabled until making it work again
+        /**
         commands.put(VoiceJoin.getNameForManagement(), new VoiceJoin());
         commands.put(VoiceLeave.getNameForManagement(), new VoiceLeave());
         commands.put(Play.getNameForManagement(), new Play());
@@ -87,6 +89,7 @@ public class CommandManager {
         commands.put(Pause.getNameForManagement(), new Pause());
         commands.put(Rewind.getNameForManagement(), new Rewind());
         commands.put(Next.getNameForManagement(), new Next());
+         */
         //game commands
         commands.put(TicTacToe.getNameForManagement(), new TicTacToe());
     }
