@@ -23,6 +23,7 @@ public class Bot {
         // Get the bot token from .env file
         String botToken = dotenv.get("TOKEN");
 
+        // Error control
         if (botToken == null || botToken.isEmpty()) {
             System.err.println("Missing DISCORD_TOKEN in .env file");
             return;
@@ -40,14 +41,11 @@ public class Bot {
         // Enable all intents
         jdaBuilder.enableIntents(intents);
         
-
-
-        
-
         // Set the bot's status and activity
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
         jdaBuilder.setActivity(Activity.playing("with JDA"));
 
+        // Takes care if any build exception happens
         try {
             CommandManager commandManager = new CommandManager();
             // Add event listeners (you can add more listeners here)
