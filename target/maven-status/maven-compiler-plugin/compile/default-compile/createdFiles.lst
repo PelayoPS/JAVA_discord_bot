@@ -1,0 +1,8 @@
+slash_commands\user\Ping.class
+slash_commands\ISlashCommand.class
+slash_commands\mods\Shutdown.class
+slash_commands\user\Avatar.class
+main\Bot.class
+main\CommandManager.class
+slash_commands\user\UserInfo.class
+listenners\SlashCommandListener.class
