@@ -5,6 +5,7 @@ listenners\OnReady.class
 main\CommandManager.class
 listenners\SlashCommandListener.class
 slash_commands\mods\Uptime.class
+util\logs\SlashCommandLogger.class
 util\logs\Logger.class
 slash_commands\ISlashCommand.class
 slash_commands\user\Avatar.class

@@ -50,10 +50,11 @@ public class CommandManager {
      */
     public void addCommands(JDA jda) {
         // TODO change this section to jda for global commands or leave guild ones
-        CommandListUpdateAction commands = jda.getGuildById("1215601141077905438").updateCommands();
+        //CommandListUpdateAction commands = jda.getGuildById("1215601141077905438").updateCommands();
+        CommandListUpdateAction commands = jda.updateCommands();
         commandsHashMap.forEach((name, command) -> {
             // Shows commands added in blue
-            System.out.println("\u001B[34m[INFO] " + name + " command added.");
+            System.out.println("\u001B[34m[INFO] \u001B[0m" + name + " command added.");
             commands.addCommands(command.getSlashInfo());
         });
         commands.queue();
