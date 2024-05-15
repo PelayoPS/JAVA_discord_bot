@@ -14,8 +14,8 @@ This bot will be created using the jda api mostly as an educational example for 
 
 ► Twitter https://twitter.com/pelayo_p_s
 
-► Discord https://discord.gg/F8AqWbEh8S
+► Discord https://discord.gg/QQYPrsghFX
 
-► Instagram https://www.instagram.com/pelayopalaciosuarez/
+► Instagram https://www.instagram.com/pelayo.p.s/
 
 ► GitHub https://github.com/PelayoPS
