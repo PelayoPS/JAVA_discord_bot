@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import io.github.cdimascio.dotenv.Dotenv;
 import listenners.SlashCommandListener;
 import java.util.List;
+import java.lang.reflect.Member;
 import java.util.Arrays;
 
 public class Bot {

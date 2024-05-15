@@ -11,7 +11,7 @@ import slash_commands.ISlashCommand;
 /**
  * Represents a slash command for retrieving the avatar of a user.
  */
-public class Avatar implements ISlashCommand {
+public class Banner implements ISlashCommand {
 
     private final Code code = Code.USER;
 
@@ -24,8 +24,8 @@ public class Avatar implements ISlashCommand {
      */
     @Override
     public SlashCommandData getSlashInfo() {
-        SlashCommandData result = Commands.slash("avatar",
-                "Description: Shows the avatar of the user provided, default user is the caller.");
+        SlashCommandData result = Commands.slash("banner",
+                "Description: Shows the banner of the user provided, default user is the caller.");
         addOptions(result);
         return result;
     }
@@ -39,7 +39,15 @@ public class Avatar implements ISlashCommand {
     public void execute(SlashCommandInteractionEvent event) {
         User user = event.getOption("user") == null ? event.getUser()
                 : event.getOption("user").getAsUser();
-        event.reply(user.getAvatarUrl()+"?format=png&dynamic=true&size=1024").queue();
+        String url = user.retrieveProfile()
+                .map(profile -> profile.getBannerUrl())
+                .complete();
+        if (url != null) {
+            System.out.println("User banner URL: " + url);
+        } else {
+            event.reply("User does not have a banner");
+        }
+        event.reply(url + "?dynamic=true&size=1024").queue();
     }
 
     /**
@@ -49,8 +57,8 @@ public class Avatar implements ISlashCommand {
      */
     @Override
     public String getHelp() {
-        return "Usage: /avatar [user]\n" +
-                "Description: Shows the avatar of the user provided, default user is the caller.";
+        return "Usage: /banner [user]\n" +
+                "Description: Shows the banner of the user provided, default user is the caller.";
     }
 
     /**

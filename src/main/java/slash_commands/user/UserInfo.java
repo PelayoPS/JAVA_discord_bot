@@ -1,5 +1,8 @@
 package slash_commands.user;
 
+import java.util.List;
+import java.util.Objects;
+
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -9,6 +12,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import slash_commands.Code;
 import slash_commands.ISlashCommand;
 
 /**
@@ -17,6 +21,10 @@ import slash_commands.ISlashCommand;
  * that shows important information about a specified user.
  */
 public class UserInfo implements ISlashCommand {
+
+    private final Code code = Code.USER;
+
+    /* =========================SUPER METHODS=============================== */
 
     /**
      * Executes the slash command.
@@ -47,6 +55,28 @@ public class UserInfo implements ISlashCommand {
     }
 
     /**
+     * Retrieves the help information for the slash command.
+     *
+     * @return A string containing information about how to use the command.
+     */
+    @Override
+    public String getHelp() {
+        return "Usage: /userinfo [user]\n" + "Description: Shows the important info of the specified user";
+    }
+
+    /**
+     * Retrieves the command code.
+     *
+     * @return The command code.
+     */
+    @Override
+    public Code getCode() {
+        return code;
+    }
+
+    /* ========================PRIVATE METHODS=============================== */
+
+    /**
      * Generates an embed message containing the user information.
      *
      * @param event The SlashCommandInteractionEvent representing the interaction
@@ -64,14 +94,14 @@ public class UserInfo implements ISlashCommand {
         builder.setThumbnail(user.getAvatarUrl());
         builder.addField("Username", user.getName(), true);
         builder.addField("ID", user.getId(), true);
-        builder.addField("Created At",
-                "<t:" + (user.getTimeCreated().toEpochSecond()) + ":R>"
-                        + "/ <t:" + (user.getTimeCreated().toEpochSecond()) + ":d>",
-                true);
 
         Member member = guild.getMemberById(user.getId());
         setServerInfoEmbed(member, builder);
         setBadgesEmbed(builder, user);
+        String banner = getBanner(user);
+        if (banner != null) {
+            builder.setImage(banner);
+        }
 
         return builder.build();
     }
@@ -81,33 +111,60 @@ public class UserInfo implements ISlashCommand {
      * - Join date
      * - Roles
      * 
-     * @param member member to get the information from
+     * @param member  member to get the information from
      * @param builder builder that creates the embed message
      */
     private void setServerInfoEmbed(Member member, EmbedBuilder builder) {
         if (member != null) {
-            builder.addField("Joined At",
-                    "<t:" + (member.getTimeJoined().toEpochSecond()) + ":R>"
-                            + "/ <t:" + (member.getTimeJoined().toEpochSecond()) + ":d>",
-                    true);
+            // roles
             StringBuilder roles = new StringBuilder();
             member.getRoles().stream().forEach(
                     role -> roles.append(role.getAsMention()).append(", "));
             builder.addField("Roles", roles.toString(), true);
+            // join time
+            builder.addField("Joined At",
+                    "<t:" + (member.getTimeJoined().toEpochSecond()) + ":R>"
+                            + "/ <t:" + (member.getTimeJoined().toEpochSecond()) + ":d>",
+                    true);
+            // creation time
+            builder.addField("Created At",
+                    "<t:" + (member.getUser().getTimeCreated().toEpochSecond()) + ":R>"
+                            + "/ <t:" + (member.getUser().getTimeCreated().toEpochSecond()) + ":d>",
+                    true);
         } else {
             builder.addField("Roles", "No roles", true);
         }
     }
 
     /**
-     * Shows the badges 
+     * Shows the badges
      * 
      * @param builder builder that creates the embed message
-     * @param user user that has the badges
+     * @param user    user that has the badges
      */
     private void setBadgesEmbed(EmbedBuilder builder, User user) {
         builder.addField("Badges",
                 user.getFlags().toString(),
                 true);
     }
+
+    /**
+     * Retrieves the banner of the user.
+     * 
+     * @param user The user to get the banner from.
+     * @return The URL of the user's banner.
+     */
+    private String getBanner(User user) {
+        String url = user.retrieveProfile()
+                .map(profile -> profile.getBannerUrl())
+                .complete();
+        if (url != null) {
+            System.out.println("User banner URL: " + url);
+        } else {
+            return "User does not have a banner";
+        }
+        return url + "?dynamic=true&size=1024";
+    }
+    
+
 }

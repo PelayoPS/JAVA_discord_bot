@@ -12,8 +12,10 @@ import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import slash_commands.ISlashCommand;
 import slash_commands.mods.Shutdown;
 import slash_commands.user.Avatar;
+import slash_commands.user.Banner;
 import slash_commands.user.Ping;
 import slash_commands.user.UserInfo;
+
 /**
  * Class that manages all command related things
  */
@@ -26,10 +28,17 @@ public class CommandManager {
      * commands.
      */
     public CommandManager() {
+        // User commands
         commandsHashMap.put("ping", new Ping());
         commandsHashMap.put("avatar", new Avatar());
-        commandsHashMap.put("shutdown", new Shutdown());
+        commandsHashMap.put("banner", new Banner());
         commandsHashMap.put("userinfo", new UserInfo());
+
+        // Mod commands
+
+        // Admin commands
+        commandsHashMap.put("shutdown", new Shutdown());
+
     }
 
     /**

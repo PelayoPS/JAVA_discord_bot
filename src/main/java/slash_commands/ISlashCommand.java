@@ -28,4 +28,23 @@ public interface ISlashCommand {
      *              interaction event triggered by the user.
      */
     public void execute(SlashCommandInteractionEvent event);
+
+
+    /**
+     * Retrieves the help information for the slash command.
+     * This method should be implemented to return a string containing information
+     * about how to use the command.
+     * 
+     * @return A string containing information about how to use the command.
+     */
+    public String getHelp();
+
+    /**
+     * Retrieves the command code.
+     * This method should be implemented to return the command code
+     * used to know who can use each command.
+     * 
+     * @return The command code.
+     */
+    public Code getCode();
 }

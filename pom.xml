@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.pelayo.bot2024</groupId>
   <artifactId>mybotproject</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <name>Bot2024</name>
   <description>This will be a discord bot coded in 2024</description>
   <properties>
