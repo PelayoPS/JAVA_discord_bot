@@ -54,6 +54,7 @@ public class CommandManager {
         CommandListUpdateAction commands = jda.updateCommands();
         commandsHashMap.forEach((name, command) -> {
             // Shows commands added in blue
+            // TODO move this to a log with msg
             System.out.println("\u001B[34m[INFO] \u001B[0m" + name + " command added.");
             commands.addCommands(command.getSlashInfo());
         });

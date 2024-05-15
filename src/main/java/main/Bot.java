@@ -10,7 +10,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 import listenners.OnReady;
 import listenners.SlashCommandListener;
 import java.util.List;
-import java.lang.reflect.Member;
 import java.util.Arrays;
 
 public class Bot {
