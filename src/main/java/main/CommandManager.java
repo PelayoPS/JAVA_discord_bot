@@ -49,7 +49,7 @@ public class CommandManager {
      * @param jda The JDA instance representing the Discord bot.
      */
     public void addCommands(JDA jda) {
-        // !! change this section to jda for global commands or leave guild ones
+        // !! change this section to jda|guild depending if you want global commands
         //CommandListUpdateAction commands = jda.getGuildById("1215601141077905438").updateCommands();
         CommandListUpdateAction commands = jda.updateCommands();
         commandsHashMap.forEach((name, command) -> {
