@@ -1,6 +1,6 @@
 package util.logs;
 
-public interface Logger<T> {
+public interface ILogger<T> {
 
     /**
      * Logs an event.

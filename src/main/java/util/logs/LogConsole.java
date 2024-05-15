@@ -4,7 +4,7 @@ package util.logs;
  * The LogConsole class is responsible for logging events to the console.
  * It implements the Logger interface with a generic type of String.
  */
-public class LogConsole implements Logger<String>{
+public class LogConsole implements ILogger<String>{
 
     /**
      * Logs the given code and message to the console.

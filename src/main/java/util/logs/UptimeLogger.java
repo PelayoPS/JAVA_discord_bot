@@ -3,7 +3,7 @@ package util.logs;
 
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 
-public class UptimeLogger implements Logger<ReadyEvent> {
+public class UptimeLogger implements ILogger<ReadyEvent> {
 
     private static long startTime = 0;
 

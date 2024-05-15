@@ -16,7 +16,7 @@ import slash_commands.user.Avatar;
 import slash_commands.user.Banner;
 import slash_commands.user.Ping;
 import slash_commands.user.UserInfo;
-import util.logs.Logger;
+import util.logs.ILogger;
 
 /**
  * Class that manages all command related things
@@ -24,13 +24,13 @@ import util.logs.Logger;
 public class CommandManager {
 
     private HashMap<String, ISlashCommand> commandsHashMap = new HashMap<String, ISlashCommand>();
-    private Logger<String> logConsole;
+    private ILogger<String> logConsole;
 
     /**
      * Constructs a new CommandManager object and initializes the available
      * commands.
      */
-    public CommandManager(Logger<String> logConsole) {
+    public CommandManager(ILogger<String> logConsole) {
         this.logConsole = logConsole;
         // User commands
         commandsHashMap.put("ping", new Ping());
@@ -84,7 +84,7 @@ public class CommandManager {
      * 
      * @return The logger used by the CommandManager.
      */
-    public Logger<String> getLogger() {
+    public ILogger<String> getLogger() {
         return logConsole;
     }
 
