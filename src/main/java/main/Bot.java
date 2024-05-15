@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import io.github.cdimascio.dotenv.Dotenv;
+import listenners.OnReady;
 import listenners.SlashCommandListener;
 import java.util.List;
 import java.lang.reflect.Member;
@@ -51,10 +52,10 @@ public class Bot {
             CommandManager commandManager = new CommandManager();
             // Add event listeners (you can add more listeners here)
             jdaBuilder.addEventListeners(new SlashCommandListener(commandManager));
+            jdaBuilder.addEventListeners(new OnReady());
             // Build and connect the JDA
             JDA jda = jdaBuilder.build();
             jda.awaitReady();
-            System.out.println("Discord bot is ready!");
             // register the command
             commandManager.addCommands(jda);
 

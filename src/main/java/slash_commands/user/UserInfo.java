@@ -1,8 +1,5 @@
 package slash_commands.user;
 
-import java.util.List;
-import java.util.Objects;
-
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -84,25 +81,34 @@ public class UserInfo implements ISlashCommand {
      * @return The MessageEmbed object containing the user information.
      */
     private MessageEmbed generateEmbed(SlashCommandInteractionEvent event) {
+        // gets user from option or default if null
         User user = event.getOption("user") == null
                 ? event.getUser()
                 : event.getOption("user").getAsUser();
+        // creates the builder
         EmbedBuilder builder = new EmbedBuilder();
+        // gets the guild
         Guild guild = event.getGuild();
+        // sets the title, color, thumbnail, and fields
         builder.setTitle("User Information");
         builder.setColor(0x0000FF);
         builder.setThumbnail(user.getAvatarUrl());
         builder.addField("Username", user.getName(), true);
         builder.addField("ID", user.getId(), true);
 
+        // gets the member
         Member member = guild.getMemberById(user.getId());
+        // sets teh roles and times
         setServerInfoEmbed(member, builder);
+        // sets the badges
         setBadgesEmbed(builder, user);
+        // gets the banner
         String banner = getBanner(user);
         if (banner != null) {
+            // sets the banner
             builder.setImage(banner);
         }
-
+        // builds the embed
         return builder.build();
     }
 
@@ -165,6 +171,5 @@ public class UserInfo implements ISlashCommand {
         }
         return url + "?dynamic=true&size=1024";
     }
-    
 
 }

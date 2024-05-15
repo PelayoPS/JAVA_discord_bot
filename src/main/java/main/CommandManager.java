@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import slash_commands.ISlashCommand;
 import slash_commands.mods.Shutdown;
+import slash_commands.mods.Uptime;
 import slash_commands.user.Avatar;
 import slash_commands.user.Banner;
 import slash_commands.user.Ping;
@@ -35,6 +36,7 @@ public class CommandManager {
         commandsHashMap.put("userinfo", new UserInfo());
 
         // Mod commands
+        commandsHashMap.put("uptime", new Uptime());
 
         // Admin commands
         commandsHashMap.put("shutdown", new Shutdown());
