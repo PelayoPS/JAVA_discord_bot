@@ -24,7 +24,7 @@ public class UptimeLogger implements Logger<ReadyEvent> {
      */
     @Override
     public void logEvent(ReadyEvent event) {
-        System.out.println("\u001B[35mBot is ready!");
+        System.out.println("\u001B[35mBot is ready!\u001B[0m");
     }
 
     /**

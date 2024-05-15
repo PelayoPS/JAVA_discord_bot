@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import util.logs.LogConsole;
 import io.github.cdimascio.dotenv.Dotenv;
 import listenners.OnReady;
 import listenners.SlashCommandListener;
@@ -15,6 +16,9 @@ import java.util.Arrays;
 public class Bot {
 
     public static void main(String[] args) {
+        //loggers
+        LogConsole logConsole = new LogConsole();
+
         // Load .env file
         Dotenv dotenv = Dotenv.configure()
                 .directory("/secret")
@@ -48,7 +52,7 @@ public class Bot {
 
         // Takes care if any build exception happens
         try {
-            CommandManager commandManager = new CommandManager();
+            CommandManager commandManager = new CommandManager(logConsole);
             // Add event listeners (you can add more listeners here)
             jdaBuilder.addEventListeners(new SlashCommandListener(commandManager));
             jdaBuilder.addEventListeners(new OnReady());
@@ -57,13 +61,6 @@ public class Bot {
             jda.awaitReady();
             // register the command
             commandManager.addCommands(jda);
-
-            // shows the commands
-            jda.retrieveCommands().queue(commands -> {
-                commands.forEach(command -> {
-                    System.out.println(command.getName());
-                });
-            });
             
         } catch (Exception e) {
             System.err.println("Error building or connecting the JDA: " + e.getMessage());

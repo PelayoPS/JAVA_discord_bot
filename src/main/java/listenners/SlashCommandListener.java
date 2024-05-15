@@ -3,7 +3,6 @@ package listenners;
 import main.CommandManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import util.logs.SlashCommandLogger;
 
 public class SlashCommandListener extends ListenerAdapter {
     private CommandManager commandManager;
@@ -13,10 +12,11 @@ public class SlashCommandListener extends ListenerAdapter {
     }
 
     @Override
-    public void onSlashCommandInteraction(SlashCommandInteractionEvent event){
-        SlashCommandLogger logger = new SlashCommandLogger();
-        logger.logEvent(event);       
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
+        this.commandManager.getLogger().logEvent("LOG|Slash command event: " + event.getName() +
+                " was triggered by " + event.getUser().getName() +
+                " in " + event.getGuild().getName());
         commandManager.executeCommand(event);
-        
+
     }
 }

@@ -4,8 +4,7 @@ import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import util.logs.UptimeLogger;
 
-public class OnReady extends ListenerAdapter
- {
+public class OnReady extends ListenerAdapter {
 
     /**
      * This method is called by JDA when the bot is ready to start receiving events.
@@ -16,5 +15,5 @@ public class OnReady extends ListenerAdapter
         long time = System.currentTimeMillis();
         new UptimeLogger(time).logEvent(event);
     }
-    
+
 }

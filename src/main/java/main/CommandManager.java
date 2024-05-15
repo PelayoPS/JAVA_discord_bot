@@ -16,6 +16,7 @@ import slash_commands.user.Avatar;
 import slash_commands.user.Banner;
 import slash_commands.user.Ping;
 import slash_commands.user.UserInfo;
+import util.logs.Logger;
 
 /**
  * Class that manages all command related things
@@ -23,12 +24,14 @@ import slash_commands.user.UserInfo;
 public class CommandManager {
 
     private HashMap<String, ISlashCommand> commandsHashMap = new HashMap<String, ISlashCommand>();
+    private Logger<String> logConsole;
 
     /**
      * Constructs a new CommandManager object and initializes the available
      * commands.
      */
-    public CommandManager() {
+    public CommandManager(Logger<String> logConsole) {
+        this.logConsole = logConsole;
         // User commands
         commandsHashMap.put("ping", new Ping());
         commandsHashMap.put("avatar", new Avatar());
@@ -50,12 +53,13 @@ public class CommandManager {
      */
     public void addCommands(JDA jda) {
         // !! change this section to jda|guild depending if you want global commands
-        //CommandListUpdateAction commands = jda.getGuildById("1215601141077905438").updateCommands();
+        // CommandListUpdateAction commands =
+        // jda.getGuildById("1215601141077905438").updateCommands();
         CommandListUpdateAction commands = jda.updateCommands();
         commandsHashMap.forEach((name, command) -> {
             // Shows commands added in blue
-            // TODO move this to a log with msg
-            System.out.println("\u001B[34m[INFO] \u001B[0m" + name + " command added.");
+            logConsole.logEvent("INFO|" + name + " command added.");
+
             commands.addCommands(command.getSlashInfo());
         });
         commands.queue();
@@ -73,6 +77,15 @@ public class CommandManager {
         if (command != null) {
             command.execute(event);
         }
+    }
+
+    /**
+     * Returns the logger used by the CommandManager.
+     * 
+     * @return The logger used by the CommandManager.
+     */
+    public Logger<String> getLogger() {
+        return logConsole;
     }
 
 }
