@@ -53,9 +53,9 @@ public class CommandManager {
      */
     public void addCommands(JDA jda) {
         // !! change this section to jda|guild depending if you want global commands
-        // CommandListUpdateAction commands =
-        // jda.getGuildById("1215601141077905438").updateCommands();
-        CommandListUpdateAction commands = jda.updateCommands();
+         CommandListUpdateAction commands =
+         jda.getGuildById("1215601141077905438").updateCommands();
+        //CommandListUpdateAction commands = jda.updateCommands();
         commandsHashMap.forEach((name, command) -> {
             // Shows commands added in blue
             logConsole.logEvent("INFO|" + name + " command added.");
