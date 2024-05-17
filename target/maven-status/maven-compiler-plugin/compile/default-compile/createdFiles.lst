@@ -13,7 +13,6 @@ slash_commands\ISlashCommand.class
 util\logs\ILogger.class
 slash_commands\user\Avatar.class
 main\Bot.class
-slash_commands\mods\TestImage.class
 slash_commands\user\UserInfo.class
 util\logs\UptimeLogger.class
 slash_commands\user\Banner.class
