@@ -8,6 +8,7 @@ main\CommandManager.class
 listenners\SlashCommandListener.class
 slash_commands\mods\Uptime.class
 slash_commands\user_related\Ping.class
+listenners\OnMemberJoin.class
 slash_commands\ISlashCommand.class
 util\logs\ILogger.class
 slash_commands\user\Avatar.class

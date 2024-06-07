@@ -1,11 +1,14 @@
 package slash_commands.mods;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import slash_commands.Code;
 import slash_commands.ISlashCommand;
 import util.logs.UptimeLogger;
+
+import net.dv8tion.jda.api.Permission;
 
 /**
  * Represents a slash command that shows the time the bot has been active.
@@ -23,7 +26,10 @@ public class Uptime implements ISlashCommand {
      */
     @Override
     public SlashCommandData getSlashInfo() {
-        SlashCommandData result = Commands.slash("uptime", "Shows the time the bot has been active");
+        SlashCommandData result = Commands.slash(
+                "uptime",
+                "Shows the time the bot has been active")
+                .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR));
         return result;
     }
 
